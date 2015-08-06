@@ -1,0 +1,695 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+
+
+  <meta name="keywords" content="javascript," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="什么是HTML-5 Full-Screen API不同于浏览器自身提供的网页全屏功能，Full-Screen API可以使网页中特定的元素全屏展示，或许是一张图片，或许是一段视频…重要的是，通过该api，我们能够很方便地实现全屏功能．遗憾的是，该ＡＰＩ支持新的浏览器，如果想在老的浏览器中也实现全屏，就没办法了．
+
+
+来自Can I Use的浏览器兼容性数据
+
+需要注意的是，由于该API还未进入标准">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTML-5 Full-Screen API">
+<meta property="og:url" content="http://yoursite.com/2014/08/21/HTML-5 Full-Screen API/index.html">
+<meta property="og:site_name" content="Begin">
+<meta property="og:description" content="什么是HTML-5 Full-Screen API不同于浏览器自身提供的网页全屏功能，Full-Screen API可以使网页中特定的元素全屏展示，或许是一张图片，或许是一段视频…重要的是，通过该api，我们能够很方便地实现全屏功能．遗憾的是，该ＡＰＩ支持新的浏览器，如果想在老的浏览器中也实现全屏，就没办法了．
+
+
+来自Can I Use的浏览器兼容性数据
+
+需要注意的是，由于该API还未进入标准">
+<meta property="og:image" content="http://yoursite.com/img/HTML-5 Full-Screen API/full-screen-api.png">
+<meta property="og:updated_time" content="2015-08-06T03:46:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HTML-5 Full-Screen API">
+<meta name="twitter:description" content="什么是HTML-5 Full-Screen API不同于浏览器自身提供的网页全屏功能，Full-Screen API可以使网页中特定的元素全屏展示，或许是一张图片，或许是一段视频…重要的是，通过该api，我们能够很方便地实现全屏功能．遗憾的是，该ＡＰＩ支持新的浏览器，如果想在老的浏览器中也实现全屏，就没办法了．
+
+
+来自Can I Use的浏览器兼容性数据
+
+需要注意的是，由于该API还未进入标准">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> HTML-5 Full-Screen API | Begin </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?48021ee644688ca93434cdf9a85d3cb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Begin</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              HTML-5 Full-Screen API
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-08-21T19:26:54+08:00" content="2014-08-21">
+            2014-08-21
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2014/08/21/HTML-5 Full-Screen API/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2014/08/21/HTML-5 Full-Screen API/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h1 id="什么是HTML-5_Full-Screen_API">什么是HTML-5 Full-Screen API</h1><p>不同于浏览器自身提供的网页全屏功能，Full-Screen API可以使网页中特定的元素全屏展示，或许是一张图片，或许是一段视频…重要的是，通过该api，我们能够很方便地实现全屏功能．遗憾的是，该ＡＰＩ支持新的浏览器，如果想在老的浏览器中也实现全屏，就没办法了．</p>
+<p><a class="fancybox" href="/img/HTML-5 Full-Screen API/full-screen-api.png" title="浏览器兼容性" rel="HTML-5 Full-Screen API"><img src="/img/HTML-5 Full-Screen API/full-screen-api.png" alt="浏览器兼容性"></a></p>
+<blockquote>
+<p>来自<a href="http://caniuse.com/#feat=fullscreen" target="_blank">Can I Use</a>的浏览器兼容性数据</p>
+</blockquote>
+<p>需要注意的是，由于该API还未进入标准化阶段，所以调用该API时还是需要加上厂商前缀(vendor prefix)．而且为了区别旧版的fullScreen API，大部分厂商(除了firefox)将fullScreen的大写S改成了小写s．</p>
+<h1 id="API的属性和方法">API的属性和方法</h1><p>根据<a href="http://fullscreen.spec.whatwg.org/" target="_blank">whatwg</a>的草案规定:<br>标准的属性有两个: document.fullscreenEnabled, document.fullscreenElement.<br>标准的方法有两个: element.requestFullscreen(), document.exitFullscreen().<br>标准的事件类型也有两个: fullscreenchange, fullscreenerror．<br>同时，还规定:backdrop伪元素和:fullscreen伪类．</p>
+<a id="more"></a>
+<blockquote>
+<p>requestFullscreen()是在指定元素上调用的，而exitFullscreen是需要在document上调用,具体的细节流程可以查看<a href="http://fullscreen.spec.whatwg.org/" target="_blank">whatwg</a>;</p>
+</blockquote>
+<h2 id="requestFullscreen()">requestFullscreen()</h2><p>void requestFullscreen();</p>
+<blockquote>
+<p>使特定的元素进行全屏模式</p>
+</blockquote>
+<p>在不同浏览器中调用时，需要加其前缀:</p>
+<ul>
+<li>webkitRequestFullscreen</li>
+<li>mozRequestFullScreen </li>
+<li>msRequestFullscreen</li>
+</ul>
+<p>在调用requestFullscreen()之前，需要检测浏览器是否支持fullscreen，可以通过检查document.fullscreenEnabled是否为true;</p>
+<p>同样地，在不同浏览器调用时，需要加其前缀:</p>
+<ul>
+<li>document.webkitFullscreenEnabled</li>
+<li>document.mozFullScreenEnabled</li>
+<li>document.msFullscreenEnabled</li>
+</ul>
+<p>在requestFullscreen()执行过程中，会大致经历以下几步：</p>
+<ol>
+<li><p>检查该元素是否能够全屏,需满足以下全部条件<br> 1.1 元素是否在document中<br> 1.2 元素所在document的fullscreenEnabled标志是否设置正确<br> 1.3 元素所在document的fullscreenElement栈是否为空<br> 1.4 元素没有存在iframe祖先元素</p>
+</li>
+<li><p>如果有错误，则会触发fullscreenerror事件;否则將该元素放到fullscreenElement栈顶,接着触发fullscreenchange事件.</p>
+</li>
+</ol>
+<p>同样地，若需要为fullscreenerror和fullscreenchange事件添加侦听器，也需要加其前缀:</p>
+<p>fullscreenchange:</p>
+<ul>
+<li>webkitfullscreenchange</li>
+<li>mozfullscreenchange</li>
+<li>MSFullscreenchange</li>
+</ul>
+<p>fullscreenerror:</p>
+<ul>
+<li>webkitfullscreenerror</li>
+<li>mozfullscreenerror</li>
+<li>MSFullscreenerror</li>
+</ul>
+<h2 id="exitFullscreen()">exitFullscreen()</h2><p>取消全屏时，需要在document元素上调用exitFullscreen(), 该方法在不同浏览器中命名有些许差别：</p>
+<ul>
+<li>document.webkitExitFullscreen()</li>
+<li>document.mozCancelFullScreen()</li>
+<li>document.msExitFullscreen()</li>
+</ul>
+<p>执行完exitFullscreen()后会触发fullscreenchange事件．</p>
+<h2 id=":backdrop_和_:fullscreen">:backdrop 和 :fullscreen</h2><p>:backdrop伪元素是在fullscreenElement之下的元素，可以用它来设定背景的颜色，但是到目前为止，只有在ie11上才可以设定:backdrop，其他浏览器暂时不允许改变:backdrop的样式．</p>
+<p>比较常用的是通过:fullscreen伪类来改变元素在全屏下的样式，在不同的浏览器下也要加上对应的前缀：</p>
+<ul>
+<li>:-moz-full-screen</li>
+<li>:-webkit-full-screen</li>
+<li>:-ms-fullscreen</li>
+</ul>
+<p>注意,对于每个前缀对应的样式要分为独立的规则写，否则会造成无法正确地应用,如：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">:-moz-full-screen</span>,</span><br><span class="line"><span class="symbol">:-webkit-full-screen</span>,</span><br><span class="line"><span class="symbol">:-ms-fullscrren</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的写法是错误的，假如是webkit的浏览读到这个规则，那么当它读到第一条子规则时无法识别，因此会把后面的子规则也抛弃掉，正确的写法是分开写．</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">:-moz-full-screen</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="symbol">:-webkit-full-screen</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="symbol">:-ms-fullscrren</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Demo">Demo</h1><p>我在写一个插件时，也加入了fullscrren api,有兴趣的可以看一下<a href="http://zengguanming.github.io/ppSlider/" target="_blank">demo</a>．</p>
+<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://fullscreen.spec.whatwg.org/" target="_blank">whatwg fullscrren specification</a><br>[2] <a href="http://www.sitepoint.com/use-html5-full-screen-api/" target="_blank">use-html5-full-screen-api/</a><br>[3] <a href="http://hacks.mozilla.org/2012/01/using-the-fullscreen-api-in-web-browsers/" target="_blank">using-the-fullscreen-api-in-web-browsers/</a></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag">#javascript</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/08/29/常用的正则表达式及分析/" rel="prev">常用的正则表达式及分析</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/05/22/(译)NumPy教程(一)/" rel="next">(译)NumPy教程(一)</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2014/08/21/HTML-5 Full-Screen API/"
+                   data-title="HTML-5 Full-Screen API" data-url="http://yoursite.com/2014/08/21/HTML-5 Full-Screen API/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="https://avatars0.githubusercontent.com/u/5821394?v=3&s=460" alt="zengguanming" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">zengguanming</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是HTML-5_Full-Screen_API"><span class="nav-number">1.</span> <span class="nav-text">什么是HTML-5 Full-Screen API</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#API的属性和方法"><span class="nav-number">2.</span> <span class="nav-text">API的属性和方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#requestFullscreen()"><span class="nav-number">2.1.</span> <span class="nav-text">requestFullscreen()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#exitFullscreen()"><span class="nav-number">2.2.</span> <span class="nav-text">exitFullscreen()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#:backdrop_和_:fullscreen"><span class="nav-number">2.3.</span> <span class="nav-text">:backdrop 和 :fullscreen</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Demo"><span class="nav-number">3.</span> <span class="nav-text">Demo</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zengguanming</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"hialex"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,700 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+
+
+  <meta name="keywords" content="recommender system," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="在计算机编程中，会经常用到矩阵来存储数据，而且很多时候是一个高维的稀疏的矩阵。如果说你的业务要求不需要那么高的准确度，那么我们就可以找一个方法来得到一个近似的矩阵，只抽取”重要”的部分。奇异值分解可以很好的完成这样的任务，它可以计算分解出每个特征向量的重要程度(特征值)，然后筛选掉特征值较低的部分。在推荐系统CF算法中，我们往往要构造一个很大的用户-项矩阵，如果使用svd，我们可以将它分解成三个矩">
+<meta property="og:type" content="article">
+<meta property="og:title" content="奇异值分解SVD">
+<meta property="og:url" content="http://yoursite.com/2014/04/25/奇异值分解svd/index.html">
+<meta property="og:site_name" content="Begin">
+<meta property="og:description" content="在计算机编程中，会经常用到矩阵来存储数据，而且很多时候是一个高维的稀疏的矩阵。如果说你的业务要求不需要那么高的准确度，那么我们就可以找一个方法来得到一个近似的矩阵，只抽取”重要”的部分。奇异值分解可以很好的完成这样的任务，它可以计算分解出每个特征向量的重要程度(特征值)，然后筛选掉特征值较低的部分。在推荐系统CF算法中，我们往往要构造一个很大的用户-项矩阵，如果使用svd，我们可以将它分解成三个矩">
+<meta property="og:image" content="http://yoursite.com/img/SVD/1fbef76df3443005c3c8ccf047e4790f.png">
+<meta property="og:image" content="http://yoursite.com/img/SVD/4f7022d9b8951e5d7f1ddd8630c50ff5.png">
+<meta property="og:image" content="http://yoursite.com/img/SVD/201101192226323008.png">
+<meta property="og:image" content="http://yoursite.com/img/SVD/x1.png">
+<meta property="og:image" content="http://yoursite.com/img/SVD/x2.png">
+<meta property="og:image" content="http://yoursite.com/img/SVD/mx1.png">
+<meta property="og:image" content="http://yoursite.com/img/SVD/mx1p.png">
+<meta property="og:image" content="http://yoursite.com/img/SVD/mx2.png">
+<meta property="og:image" content="http://yoursite.com/img/SVD/mx2p.png">
+<meta property="og:image" content="http://yoursite.com/img/SVD/eigenValue.png">
+<meta property="og:image" content="http://yoursite.com/img/SVD/201101192226332060.png">
+<meta property="og:image" content="http://yoursite.com/img/SVD/eigenValueDe.png">
+<meta property="og:image" content="http://yoursite.com/img/SVD/aat.png">
+<meta property="og:image" content="http://yoursite.com/img/SVD/ata.png">
+<meta property="og:image" content="http://yoursite.com/img/SVD/aats.png">
+<meta property="og:image" content="http://yoursite.com/img/SVD/atas.png">
+<meta property="og:image" content="http://yoursite.com/img/SVD/esv.png">
+<meta property="og:image" content="http://yoursite.com/img/SVD/svdUserRating.png">
+<meta property="og:image" content="http://yoursite.com/img/SVD/aate.png">
+<meta property="og:image" content="http://yoursite.com/img/SVD/aated.png">
+<meta property="og:image" content="http://yoursite.com/img/SVD/as.png">
+<meta property="og:image" content="http://yoursite.com/img/SVD/truncateSVD.png">
+<meta property="og:updated_time" content="2015-08-06T03:46:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="奇异值分解SVD">
+<meta name="twitter:description" content="在计算机编程中，会经常用到矩阵来存储数据，而且很多时候是一个高维的稀疏的矩阵。如果说你的业务要求不需要那么高的准确度，那么我们就可以找一个方法来得到一个近似的矩阵，只抽取”重要”的部分。奇异值分解可以很好的完成这样的任务，它可以计算分解出每个特征向量的重要程度(特征值)，然后筛选掉特征值较低的部分。在推荐系统CF算法中，我们往往要构造一个很大的用户-项矩阵，如果使用svd，我们可以将它分解成三个矩">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> 奇异值分解SVD | Begin </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?48021ee644688ca93434cdf9a85d3cb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Begin</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              奇异值分解SVD
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-04-25T12:46:50+08:00" content="2014-04-25">
+            2014-04-25
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2014/04/25/奇异值分解svd/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2014/04/25/奇异值分解svd/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>在计算机编程中，会经常用到矩阵来存储数据，而且很多时候是一个高维的稀疏的矩阵。如果说你的业务要求不需要那么高的准确度，那么我们就可以找一个方法来得到一个近似的矩阵，<strong>只抽取”重要”的部分</strong>。<abbr title="Singular Value Decomposition">奇异值分解</abbr>可以很好的完成这样的任务，它可以<span class="mark"><strong>计算分解出每个特征向量的重要程度(特征值)，然后筛选掉特征值较低的部分</strong></span>。在推荐系统CF算法中，我们往往要构造一个很大的用户-项矩阵，如果使用svd，我们可以将它分解成三个矩阵，从中筛选掉一些特征向量，那么最终我们可以要三个较小的矩阵来近似还原之前很大的用户-项矩阵。不仅做到了降维，而且还进行了特征选择。现在对于SVD算法或者计算SVD的算法已经有很多的优化，下文只是简单初步的介绍特征向量，特征值，特征值分解，奇异值分解和计算奇异值分解的方法。<br><a id="more"></a></p>
+<h2 id="特征向量">特征向量</h2><p>矩阵可以理解成是一种线性变换，在二维空间中常见的线性变换包括旋转、伸缩等。</p>
+<ul>
+<li>旋转变换：(绕原点逆时针旋转θ度角)</li>
+</ul>
+<p><img src="/img/SVD/1fbef76df3443005c3c8ccf047e4790f.png" alt=""></p>
+<ul>
+<li>伸缩变换: (x坐标伸缩S<sub>x</sub>倍,y坐标伸缩S<sub>y</sub>倍)</li>
+</ul>
+<p><img src="/img/SVD/4f7022d9b8951e5d7f1ddd8630c50ff5.png" alt=""></p>
+<p>矩阵乘以一个向量时会得到一个新的向量，这个变换后的向量可能与原来的向量有<strong>方向或长度上的差异</strong>。</p>
+<p>引用<a href="http://www.cnblogs.com/LeftNotEasy/archive/2011/01/19/svd-and-applications.html" target="_blank" rel="external">这篇博客的一个例子</a>，假设有一个矩阵M：(是个伸缩变换矩阵)</p>
+<p><img src="/img/SVD/201101192226323008.png" alt=""></p>
+<p>有两个向量：</p>
+<p><img src="/img/SVD/x1.png" alt=""><br><img src="/img/SVD/x2.png" alt=""></p>
+<p>用矩阵M乘以x<sub>1</sub>:</p>
+<p><img src="/img/SVD/mx1.png" alt=""></p>
+<p>变换后的向量如下图所示：(红色为变换后的向量)</p>
+<p><img src="/img/SVD/mx1p.png" alt=""></p>
+<p>通过图可知,与原来的x<sub>1</sub>相比，&lt;<span class="mark"><strong>长度和方向都有变化</strong></span>。</p>
+<p>用矩阵M乘以x<sub>2</sub>:</p>
+<p><img src="/img/SVD/mx2.png" alt=""></p>
+<p>变换后的向量如下图所示：<small>(红色为变换后的向量)</small></p>
+<p><img src="/img/SVD/mx2p.png" alt=""></p>
+<p><strong>只有长度上的变化</strong>。</p>
+<p>通过以上的两个例子，主要是为了直观地理解什么是特征向量。</p>
+<blockquote>
+<p>如果矩阵对某一个向量只发生伸缩变换，不对这些向量产生旋转的效果，那么这些向量就称为这个矩阵的特征向量，伸缩的比例就是特征值。    </p>
+</blockquote>
+<p>公式化的定义就是：</p>
+<p><img src="/img/SVD/eigenValue.png" alt=""></p>
+<p>上面例子2中的x<sub>2</sub>就是M的其中一特征向量，特征值为3。</p>
+<p><strong>所以一个向量经矩阵变换后只有长度发生变化的话，这个向量就是该变换矩阵的特征向量。</strong></p>
+<h2 id="特征值分解的意义">特征值分解的意义</h2><p>假设一个矩阵A有n个不同的特征值，那么这n个特征值对应的特征向量线性无关。意思就是说，只要知道这些特征向量和特征值我们就可以还原这个矩阵。更重要的，根据特征值的大小，我们可以知道哪些特征更为重要，从而进行特征选择。尤其对于高维矩阵来说，这是很好的降维的方法。</p>
+<p>既然有了特征值分解，为什么还需要奇异值分解呢？</p>
+<p>因为特征值分解只能分解方阵，而奇异值分解适合于所有的矩阵。通过了解特征值分解，我们可以知道它与奇异值分解的联系，而且还可以利用这个关系来求奇异值分解。</p>
+<h2 id="奇异值分解">奇异值分解</h2><p>经过奇异值分解后的矩阵是这样的形式，其中U是正交矩阵，∑是对角矩阵，V是正交矩阵。</p>
+<p><img src="/img/SVD/201101192226332060.png" alt=""></p>
+<p>而经过特征值分解后的对称矩阵是这样的形式：</p>
+<p><img src="/img/SVD/eigenValueDe.png" alt=""></p>
+<p>所以对于对称矩阵，其特征值分解也是一种奇异值分解。当然，在现实情况中，矩阵一般没有那么”好”，这时奇异值分解就可以派上用场。</p>
+<p>有一个<strong>非常有意思的性质</strong>，如果A不是方阵，那么有没有办法把它转化为方阵呢？有，就是乘以它的A<sup>T</sup>,而且A和AA<sup>T</sup>和A<sup>T</sup>A特征值还相同！</p>
+<p>利用这个性质，我们就可以由特征值来求奇异值！</p>
+<p><img src="/img/SVD/aat.png" alt=""></p>
+<p><img src="/img/SVD/ata.png" alt=""></p>
+<p>因为对于正交矩阵U，U<sup>T</sup>U = U<sup>-1</sup>U = E。V也一样，所以化简可得:</p>
+<p><img src="/img/SVD/aats.png" alt=""></p>
+<p><img src="/img/SVD/atas.png" alt=""></p>
+<p>因为AA<sup>T</sup>和A<sup>T</sup>A是对称方阵，所以可以进行特征值分解，与前面的特征分解形式相对应，则∑<sup>2</sup>是其特征值，U和V分别是这两个方阵的特征向量。</p>
+<p>因此，A的奇异值是AA<sup>T</sup>特征值的开根。</p>
+<p><img src="/img/SVD/esv.png" alt=""></p>
+<p>A奇异值分解中的U是AA<sup>T</sup>的特征向量矩阵，V是A<sup>T</sup>A的特征向量矩阵。通过这样的联系，我们可以通过求AA<sup>T</sup>和A<sup>T</sup>A的特征值分解来得到A的奇异值分解。</p>
+<p>通过这样的方法我们就可以求出一个矩阵的SVD分解，当然这只是一个很基本的，较为直观的一个方法。在实际的科学计算包中，例如apache的common math,matlab等使用的算法的精度会更高而且效率上也会高很多。具体的算法可以自行搜一下。</p>
+<h2 id="SVD实例">SVD实例</h2><p>在movielens的数据集中任意取了四个用户对其中三部电影(Shrek2,The matrix Reload,The Sixth Sense)的评分数据。(横坐标为电影, 纵坐标为用户) (0为用户未给该电影评分) </p>
+<p><img src="/img/SVD/svdUserRating.png" alt=""></p>
+<p>右乘A<sup>T</sup>后为：</p>
+<p><img src="/img/SVD/aate.png" alt=""></p>
+<p>进行特征值分解： (四舍五入取小数点后2位)</p>
+<p><img src="/img/SVD/aated.png" alt=""></p>
+<p>同理可以根据A<sup>T</sup>A求出特征向量矩阵V。  </p>
+<p>所以A的奇异矩阵分解为：(因为计算精度问题，所以结果会有稍些出入)</p>
+<p><img src="/img/SVD/as.png" alt=""></p>
+<p>在很多情况下，前10%甚至1%的奇异值的和就占了全部的奇异值之和的99%以上了。所以我们可以将矩阵进行truncate，就是只截取其中的一部分。对于这个矩阵可能截取后的效果不会太明显，但是想象这是一个4000*3000的高维矩阵，那么分解后我们需要三个矩阵来存储，4000*4000,4000*3000,3000*3000，假设前10%(3000*0.1=300)的奇异值占了奇异值和的99%，我们只取前10%的奇异值，所以这三个矩阵变为4000*300,300*300,300*3000,通过计算矩阵的存储空间，可以知道降维近似后的矩阵空间仅为原来的18.25%。</p>
+<p>假设我们取这个例子的前2个奇异值，所以矩阵变为：</p>
+<p><img src="/img/SVD/truncateSVD.png" alt=""></p>
+<p>结果看起来好像与原来的有点差异，主要是因为维数太低了而且矩阵不够稀疏，所以筛选掉的特征向量产生的影响较大。这个例子只是简单的描述计算SVD的过程和它的基本思路，主要是要对SVD有个直观的认识，理解它的作用及是如何产生作用的。</p>
+<p>大致就讲那么多，好像讲得有点浅。好吧，其实我也是刚入门，大家多互相交流。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/recommender-system/" rel="tag">#recommender system</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/05/18/定制自己的hexo主题/" rel="prev">定制自己的hexo主题</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/04/23/secrets-of-javascript-ninja读书笔记1/" rel="next">secrets of Javascript Ninja读书笔记1</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2014/04/25/奇异值分解svd/"
+                   data-title="奇异值分解SVD" data-url="http://yoursite.com/2014/04/25/奇异值分解svd/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="https://avatars0.githubusercontent.com/u/5821394?v=3&s=460" alt="zengguanming" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">zengguanming</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#特征向量"><span class="nav-number">1.</span> <span class="nav-text">特征向量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特征值分解的意义"><span class="nav-number">2.</span> <span class="nav-text">特征值分解的意义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#奇异值分解"><span class="nav-number">3.</span> <span class="nav-text">奇异值分解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SVD实例"><span class="nav-number">4.</span> <span class="nav-text">SVD实例</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zengguanming</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"hialex"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

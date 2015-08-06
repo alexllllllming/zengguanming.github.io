@@ -1,0 +1,643 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+
+
+  <meta name="keywords" content="hexo主题," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="前几天突然有想去折腾下博客主题的冲动，其实之前就有想弄个自己喜欢类型的，可是有想法无干劲，现在正好趁着七分热情赶紧着手搞一搞。因为是用hexo搭的博客,所以必须先把hexo的官方文档[1]给看了,有个大概的了解就差不多了，需要重点了解的是Theme中关于layout的约定、Variables中的一些全局变量、还有一些方便的Helpers函数。   
+看完文档之后，大概可以着手规划怎么来做了。因为我">
+<meta property="og:type" content="article">
+<meta property="og:title" content="定制自己的hexo主题">
+<meta property="og:url" content="http://yoursite.com/2014/05/18/定制自己的hexo主题/index.html">
+<meta property="og:site_name" content="Begin">
+<meta property="og:description" content="前几天突然有想去折腾下博客主题的冲动，其实之前就有想弄个自己喜欢类型的，可是有想法无干劲，现在正好趁着七分热情赶紧着手搞一搞。因为是用hexo搭的博客,所以必须先把hexo的官方文档[1]给看了,有个大概的了解就差不多了，需要重点了解的是Theme中关于layout的约定、Variables中的一些全局变量、还有一些方便的Helpers函数。   
+看完文档之后，大概可以着手规划怎么来做了。因为我">
+<meta property="og:image" content="http://yoursite.com/img/renderLayout.png">
+<meta property="og:image" content="http://yoursite.com/img/renderProcess.png">
+<meta property="og:updated_time" content="2015-08-06T03:46:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="定制自己的hexo主题">
+<meta name="twitter:description" content="前几天突然有想去折腾下博客主题的冲动，其实之前就有想弄个自己喜欢类型的，可是有想法无干劲，现在正好趁着七分热情赶紧着手搞一搞。因为是用hexo搭的博客,所以必须先把hexo的官方文档[1]给看了,有个大概的了解就差不多了，需要重点了解的是Theme中关于layout的约定、Variables中的一些全局变量、还有一些方便的Helpers函数。   
+看完文档之后，大概可以着手规划怎么来做了。因为我">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> 定制自己的hexo主题 | Begin </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?48021ee644688ca93434cdf9a85d3cb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Begin</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              定制自己的hexo主题
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-05-18T19:09:30+08:00" content="2014-05-18">
+            2014-05-18
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2014/05/18/定制自己的hexo主题/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2014/05/18/定制自己的hexo主题/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>前几天突然有想去折腾下博客主题的冲动，其实之前就有想弄个<abbr title="两栏且有固定侧边栏的">自己喜欢类型的</abbr>，可是有想法无干劲，现在正好趁着七分热情赶紧着手搞一搞。因为是用<a href="http://hexo.io" target="_blank" rel="external">hexo</a>搭的博客,所以必须先把hexo的官方文档<sup><a href="http://hexo.io/docs/" target="_blank" rel="external">[1]</a></sup>给看了,有个大概的了解就差不多了，<span class="mark">需要重点了解的是Theme中关于layout的约定、Variables中的一些全局变量、还有一些方便的Helpers函数</span>。   </p>
+<p>看完文档之后，大概可以着手规划怎么来做了。因为我的目的是自己用，暂时不需要高度的可定制化，所以我都取最方便、最得心应手的来写。样式是纯css写(待我css更熟之后可能会用less或其他css预处理器再重写),布局和按钮样式是用<a href="http://purecss.io" target="_blank" rel="external">pureCSS</a>,相比boostrap，它更轻量化，自由性更高，最重要的是它真很轻，压缩版才20KB，相对于boostrap的90KB已经很小了。排版的样式参考了<a href="http://typo.sofish.de" target="_blank" rel="external">typoCSS</a>，之前用别人的主题总是感觉排版有点不舒服，所以想特意在这方面有所着重。模板是用<a href="http://embeddedjs.com" target="_blank" rel="external">ejs</a>,当然你也可以用Jade其他模板语言，ejs相对来说更方便更容易上手(特别是对于有php模板、jsp模板经验的来说，大同小异)。</p>
+<a id="more"></a>
+<h2 id="EJS">EJS</h2><p>EJS需要学的大概就是几个标记，然后在这个标记内写你的js语句，大致的列举下几个标记。</p>
+<p><code>&lt;% code %&gt;</code></p>
+<p>在这两个标记中包围中的<span class="mark">代码会当成是语句执行</span>，跟下面两个标记的区别就是它不会将结果输出到页面中。</p>
+<p><code>&lt;%- code %&gt;</code></p>
+<p>与上面的区别是，左边还有个”-“号，它会将<span class="mark">结果直接输出到页面中，不做任何处理</span>。</p>
+<p><code>&lt;%= code %&gt;</code></p>
+<p>这个标记则是”-“号变成了”=”号，它也会将结果输出到页面中，但是<span class="mark">在输出之前会将一些特殊的标记进行<abbr title="escape">转义</abbr></span>,例如一些html标签。</p>
+<p>关于EJS，还有一个需要了解的，在hexo中可以使用&lt;%- partial(‘templatePath’)%&gt;调用其中的模板，将其结果输出。对于一些可重用的模板，这方法特别好用。还可以在方法中传入相关变量，例如:</p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;%- partial(<span class="string">'templatePath'</span>,&#123;<span class="keyword">index</span>:<span class="keyword">true</span>&#125;)%&gt;</span><br></pre></td></tr></table></figure>
+<p>假如需要在不同地方都调用这个模板时，可以用这个变量来判断是主页调用的，还是非主页调用的。</p>
+<h2 id="hexo">hexo</h2><p>对于hexo，首先需要了解的是，它的路由是怎么处理的，就是当访问一个路径时，它怎么去自动调用所需的<abbr title="layout">视图</abbr>。</p>
+<p>从官网的文档中可以看到：</p>
+<p><a class="fancybox" href="/img/renderLayout.png" title="layout的一些约定" rel="定制自己的hexo主题"><img src="/img/renderLayout.png" alt="layout的一些约定"></a></p>
+<p>每个主题必须要个<code>index.layout</code>,否则会报错。当其他视图不存在时，会回调index.layout。意思是当你要访问一个关于post的路径时，它首先是会先寻找你主题下的layout文件夹里是否有post.layout，如果没有，则会调用index.layout来产生内容。</p>
+<p>在hexo的默认设置下，<span class="mark">还存在一个全局的<abbr title="layout.ejs">layout</abbr></span>,即所有的layout都会有layout.ejs的内容，大致的渲染过程是这样的：</p>
+<p><a class="fancybox" href="/img/renderProcess.png" rel="定制自己的hexo主题" title="渲染过程"><img src="/img/renderProcess.png" alt="渲染过程"></a></p>
+<p>那么在全局layout里，就可以包括一些”固定”的内容，例如导航栏，页脚等等。在我的代码中是这样写的:</p>
+<figure class="highlight erb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"></span>&lt;%-<span class="ruby"> partial(<span class="string">'_partial/head'</span>) </span>%&gt;<span class="xml"></span><br><span class="line"><span class="tag">&lt;<span class="title">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"container"</span> <span class="attribute">class</span>=<span class="value">"pure-g"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"left-sidebar pure-u-1-5"</span>&gt;</span></span><br><span class="line">        </span>&lt;%-<span class="ruby"> partial(<span class="string">'_partial/left-sidebar'</span>) </span>%&gt;<span class="xml"></span><br><span class="line">    <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"content pure-u-4-5"</span>&gt;</span></span><br><span class="line">        </span>&lt;%-<span class="ruby"> body </span>%&gt;<span class="xml"></span><br><span class="line">        </span>&lt;%-<span class="ruby"> partial(<span class="string">'_partial/footer'</span>) </span>%&gt;<span class="xml"></span><br><span class="line">  	<span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br><span class="line">  </span>&lt;%-<span class="ruby"> partial(<span class="string">'_partial/fancybox'</span>)</span>%&gt;<span class="xml"></span><br><span class="line">  </span>&lt;%-<span class="ruby"> partial(<span class="string">'_partial/baidu_analytics'</span>) </span>%&gt;<span class="xml"></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">html</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>head.js就是head标签里的一些内容，css、js的引入啊，网页标题的设置啊等等的。left-sidebar.ejs就是左边侧边栏，还有一些也类似这样。</p>
+<p><span class="mark">在layout.ejs中唯一的变量</span>就是<code>&lt;%- body %&gt;</code> 中的内容，就如上面那渲染过程图所示的，它会根据路径来自动插入对应视图的内容。例如当你访问主页(index)时，body里对应的就是index.ejs中输出的内容。</p>
+<p>在hexo的全局变量有一些变量是<code>[Data Model]</code>类型，例如要取当前页面的所有文章时，<code>page.posts</code>取出来的就是<code>[Data Model]</code>,可以通过遍历来访问其中的属性，例如：</p>
+<figure class="highlight vbscript-html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"></span><span class="vbscript">&lt;% page.posts.<span class="keyword">each</span>(<span class="keyword">function</span>(post)&#123; %&gt;</span><span class="xml"></span><br><span class="line">    <span class="tag">&lt;<span class="title">article</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">a</span> <span class="attribute">href</span>=<span class="value">"</span></span></span><span class="vbscript">&lt;%= config.root + post.path %&gt;</span><span class="xml"><span class="tag"><span class="value">"</span>&gt;</span></span><span class="vbscript">&lt;%= post.title %&gt;</span><span class="xml"><span class="tag">&lt;/<span class="title">a</span>&gt;</span></span><br><span class="line">         </span><span class="vbscript">&lt;%- post.content %&gt;</span><span class="xml"></span><br><span class="line">    <span class="tag">&lt;/<span class="title">article</span>&gt;</span></span><br><span class="line"></span><span class="vbscript">&lt;% &#125;) %&gt;</span><span class="xml"></span></span><br></pre></td></tr></table></figure>
+<p><small>输出该页面每一篇文章的标题和内容。</small></p>
+<p>把上面两个部分了解后，剩下的基本就是设计的问题。做一个简单的主题，不外乎就是要知道如何取数据然后对数据进行排版。当然，随着你博客的模块越来越多，好的代码会让你维护修改起来更省心。但是博客最主要的是给你一个写文章的平台，所以看得顺眼就行了，最重要的是坚持地写文章，等文章数量多了，可以再持续地迭代改进。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/hexo主题/" rel="tag">#hexo主题</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/05/20/用ultiSnips snippets来写文章/" rel="prev">用ultiSnips snippets来写文章</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/04/25/奇异值分解svd/" rel="next">奇异值分解SVD</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2014/05/18/定制自己的hexo主题/"
+                   data-title="定制自己的hexo主题" data-url="http://yoursite.com/2014/05/18/定制自己的hexo主题/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="https://avatars0.githubusercontent.com/u/5821394?v=3&s=460" alt="zengguanming" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">zengguanming</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#EJS"><span class="nav-number">1.</span> <span class="nav-text">EJS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hexo"><span class="nav-number">2.</span> <span class="nav-text">hexo</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zengguanming</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"hialex"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,782 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+
+
+  <meta name="keywords" content="css," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="上下文选择符子选择符： 标签1 &amp;gt; 标签2  (1为2的父元素)
+紧邻兄弟选择符： 标签1 + 标签2 （紧跟在标签1后的兄弟标签）
+一般兄弟选择符： 标签1 ~ 标签2 （所有的跟在标签1后的兄弟标签）
+* 所有元素
+p * p包含的所有元素
+非子(儿子)选择符
+section * a {font-size:2em;}
+如果存在a是section的儿子标签，则不会被选中，但是如果secti">
+<meta property="og:type" content="article">
+<meta property="og:title" content="css权威指南读书笔记1">
+<meta property="og:url" content="http://yoursite.com/2014/04/23/css权威指南读书笔记1/index.html">
+<meta property="og:site_name" content="Begin">
+<meta property="og:description" content="上下文选择符子选择符： 标签1 &amp;gt; 标签2  (1为2的父元素)
+紧邻兄弟选择符： 标签1 + 标签2 （紧跟在标签1后的兄弟标签）
+一般兄弟选择符： 标签1 ~ 标签2 （所有的跟在标签1后的兄弟标签）
+* 所有元素
+p * p包含的所有元素
+非子(儿子)选择符
+section * a {font-size:2em;}
+如果存在a是section的儿子标签，则不会被选中，但是如果secti">
+<meta property="og:image" content="http://www.ddcat.net/web/css/text/img/text_034.gif">
+<meta property="og:image" content="http://yoursite.com/img/parentWidth.png">
+<meta property="og:updated_time" content="2015-08-06T03:46:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="css权威指南读书笔记1">
+<meta name="twitter:description" content="上下文选择符子选择符： 标签1 &amp;gt; 标签2  (1为2的父元素)
+紧邻兄弟选择符： 标签1 + 标签2 （紧跟在标签1后的兄弟标签）
+一般兄弟选择符： 标签1 ~ 标签2 （所有的跟在标签1后的兄弟标签）
+* 所有元素
+p * p包含的所有元素
+非子(儿子)选择符
+section * a {font-size:2em;}
+如果存在a是section的儿子标签，则不会被选中，但是如果secti">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> css权威指南读书笔记1 | Begin </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?48021ee644688ca93434cdf9a85d3cb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Begin</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              css权威指南读书笔记1
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-04-23T16:01:21+08:00" content="2014-04-23">
+            2014-04-23
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2014/04/23/css权威指南读书笔记1/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2014/04/23/css权威指南读书笔记1/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h2 id="上下文选择符">上下文选择符</h2><p>子选择符： 标签1 &gt; 标签2  (1为2的父元素)</p>
+<p>紧邻兄弟选择符： 标签1 + 标签2 （紧跟在标签1后的兄弟标签）</p>
+<p>一般兄弟选择符： 标签1 ~ 标签2 （<span class="mark">所有</span>的跟在标签1后的兄弟标签）</p>
+<p><abbr title="通配选择符">*</abbr> 所有元素</p>
+<p>p * p包含的所有元素</p>
+<p>非子(儿子)选择符</p>
+<pre><code><span class="title">section * a {font-size:2em;}</span>
+</code></pre><p><small>如果存在a是section的儿子标签，则不会被选中，但是如果section的儿子标签中包括了a标签，则该标签会被选中。(<strong>即会排除掉儿子标签</strong>)</small></p>
+<a id="more"></a>
+<h2 id="ID和类选择符">ID和类选择符</h2><ul>
+<li>类选择符</li>
+</ul>
+<p>.类名 </p>
+<pre><code><span class="class">.special</span> <span class="rules">{<span class="rule"><span class="attribute">color</span>:<span class="value">red</span></span>;}</span>
+</code></pre><ul>
+<li>标签带类选择符</li>
+</ul>
+<p>标签.类名 </p>
+<pre><code><span class="tag">p</span><span class="class">.special</span> <span class="rules">{<span class="rule"><span class="attribute">color</span>:<span class="value">red</span></span>;}</span>
+</code></pre><ul>
+<li>多类选择符</li>
+</ul>
+<p>html设置多个类属性：</p>
+<pre><code><span class="tag">&lt;<span class="title">p</span> <span class="attribute">class</span>=<span class="value">"special unique"</span>&gt;</span><span class="tag">&lt;/<span class="title">p</span>&gt;</span>
+</code></pre><p><strong>选择同时存在两个类的元素：</strong></p>
+<pre><code><span class="class">.special</span><span class="class">.unique</span> <span class="rules">{<span class="rule"><span class="attribute">font-size</span>:<span class="value"><span class="number">18em</span></span></span>;}</span>
+</code></pre><p>(没有空格，有空格的话就变成上下文选择符了)</p>
+<ul>
+<li>ID选择符</li>
+</ul>
+<p class="mark">id可用于页内导航。</p>
+
+<p>移动页面顶部的导航：</p>
+<p><code>&lt;a href=&quot;#&quot;&gt;Back to Top&lt;/a&gt;</code></p>
+<p><small># 表示告诉浏览器当前链接目标在页面内。</small></p>
+<h2 id="什么时候用ID，什么时候用类">什么时候用ID，什么时候用类</h2><p>ID的用途是<span class="mark">在页面中唯一地标识一个元素</span>，利用唯一的ID可以方便地定位到这个元素以及它的子元素。</p>
+<p>类的目的是为了<span class="mark">标识一组具有相同特征的元素</span>。</p>
+<h2 id="属性选择符">属性选择符</h2><p>基于html标签的属性选择元素。<br>标签名[属性名]<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">img</span><span class="attr_selector">[title]</span> <span class="rules">&#123;<span class="rule"><span class="attribute">border</span>:<span class="value"><span class="number">2px</span> solid blue</span></span>;&#125;</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>属性值选择符</li>
+</ul>
+<p>选择任何<strong>带有值为属性值</strong>的属性名的标签名。<br>标签名[属性名=”属性值”]</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">img</span><span class="attr_selector">[title="red"]</span> <span class="rules">&#123;<span class="rule"><span class="attribute">border</span>:<span class="value"><span class="number">4px</span> solid green</span></span>;&#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="伪类">伪类</h2><p>在某些事件发生时，改变某些元素的样式。</p>
+<ul>
+<li>User Interface 伪类</li>
+</ul>
+<p>:链接伪类   </p>
+<ul>
+<li>Link</li>
+<li>Visited</li>
+<li>Hover</li>
+<li>Active (鼠标在元素上按下，还没有释放)</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a:link &#123;color:black;&#125;&#10;a:visited &#123;color:gray;&#125;&#10;a:hover &#123;text-decoration:none;&#125;&#10;a:active &#123;color:red;&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>:focus伪类</li>
+</ul>
+<p>表单中的文本字段在用户单击时会获得焦点。</p>
+<pre><code><span class="tag">input</span><span class="pseudo">:focus</span> {<span class="attribute">border</span>:<span class="number">1px</span> solid blue}
+</code></pre><ul>
+<li>:target伪类</li>
+</ul>
+<p>如果用户点击一个指向<strong>页面</strong>中其他元素的链接，则<strong>那个元素</strong>就是target!<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="operator">a</span> href=<span class="string">"#more_info"</span>&gt;More Information&lt;/<span class="operator">a</span>&gt;</span><br><span class="line">&lt;h2 id=<span class="string">"more_info"</span>&gt;This is <span class="operator">the</span> information you are looking <span class="keyword">for</span>.&lt;/h2&gt;<span class="comment"></span><br><span class="line">//target above </span></span><br><span class="line"><span class="comment">#more_info:target &#123;background:#eee;&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>维基百科在其引证中大量使用了:target伪类;如果没有<span class="mark">:target应用突出显示</span>，很难知道你点击的链接对应着一大堆引证中的哪一个。</p>
+<ul>
+<li>结构化伪类</li>
+</ul>
+<p>结构化伪类是根据<strong>标记的结构</strong>来改变样式。</p>
+<p>：first-child 和 ：last-child (<span class="mark">是选择该元素集合中的第一个，不是元素后代的第一个</span>)。   </p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ol.<span class="literal">result</span> li:first-child &#123;color:blue;&#125;</span><br><span class="line">&lt;ol class=<span class="string">"result"</span>&gt;</span><br><span class="line">	&lt;li&gt;<span class="type">My</span> <span class="type">Fast</span> <span class="type">Pony</span>&lt;/li&gt;</span><br><span class="line">	&lt;li&gt;<span class="type">Steady</span> <span class="type">Totter</span>&lt;/li&gt;</span><br><span class="line">&lt;/ol&gt;</span><br></pre></td></tr></table></figure>
+<p>：nth-child(n)</p>
+<pre><code><span class="tag">li</span><span class="pseudo">:nth-child</span>(<span class="number">3</span>) {} <span class="comment">//选择兄弟元素中的第三个</span>
+</code></pre><h2 id="伪元素">伪元素</h2><p>伪元素就是你的文档中若有<strong>实无</strong>的元素。</p>
+<ul>
+<li><p>::first-letter伪元素</p>
+<p>  p::first-letter {font-size:300%;}</p>
+</li>
+<li><p>::first-line</p>
+<p>  p::first-line {font-variant:small-caps;}</p>
+</li>
+<li><p>::before和::after</p>
+</li>
+</ul>
+<p>用于在特定元素前面或后面添加内容。<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;p class=<span class="string">"age"</span>&gt;<span class="number">25</span>&lt;/p&gt;</span><br><span class="line">//添加以下样式</span><br><span class="line">p.age::before &#123;content:<span class="string">"Age: "</span>;&#125;</span><br><span class="line">p.age::after &#123;content:<span class="string">" years."</span>;&#125;</span><br><span class="line">// <span class="literal">result</span>--&gt;  <span class="type">Age</span>: <span class="number">25</span> years.</span><br></pre></td></tr></table></figure></p>
+<p>在boostrap中很常见，用于元素前后清空内容</p>
+<h2 id="基线">基线</h2><p class="mark"><abbr title="baseline">基线</abbr>并不是汉字文字的下端沿，而是英文字母“x”的下端沿。</p>
+
+<h2 id="行距_行高">行距 行高</h2><p><abbr title="line height">行高</abbr>：相邻行文本基线间的距离   </p>
+<pre><code><span class="rule"><span class="attribute">line-height </span>:<span class="value"> <span class="number">1.25</span></span></span>;
+</code></pre><p>行距 上一文本基线至下一文本顶线间距离</p>
+<h2 id="对齐方式">对齐方式</h2><p>元素默认的垂直对齐方式为: <abbr title="vertical-align: baseline">基线对齐</abbr>。</p>
+<p><img src="http://www.ddcat.net/web/css/text/img/text_034.gif" alt=""></p>
+<p>vertical-align<br>语法：<br>baseline | sub | super | top | text-top | middle | bottom | text-bottom</p>
+<h2 id="字体_em">字体 em</h2><p>任意浏览器的默认字体高都是16px。所有未经调整的浏览器都符合: 1em=16px。<br>em是<strong>相对长度单位</strong>。相对于当前对象内文本的字体尺寸。<br><strong>em会继承父级元素的字体大小。</strong></p>
+<h2 id="border属性">border属性</h2><p>默认border-style属性为none。(无边框)<br>常用的是：   </p>
+<pre><code><span class="rule"><span class="attribute">border-style</span>:<span class="value"> solid</span></span>;
+</code></pre><h2 id="user-select">user-select</h2><p>css3中新增，用于设置用户可以选择的内容。</p>
+<ul>
+<li>auto——默认值，用户可以选中元素中的内容   </li>
+<li>none——用户不能选择元素中的任何内容   </li>
+<li>text——用户可以选择元素中的文本   </li>
+<li>element——文本可选，但仅限元素的边界内(只有IE和FF支持)   </li>
+<li>all——在编辑器内，如果双击/上下文点击发生在子元素上，改值的最高级祖先元素将被选中。   </li>
+</ul>
+<p>用于buuton中，使button中的文本元素不可选择。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="rule"><span class="attribute">webkit-user-select</span>:<span class="value"> none</span></span>;</span><br><span class="line"><span class="rule"><span class="attribute">-khtml-user-select</span>:<span class="value"> none</span></span>;</span><br><span class="line"><span class="rule"><span class="attribute">-moz-user-select</span>:<span class="value"> none</span></span>;</span><br><span class="line"><span class="rule"><span class="attribute">-ms-user-select</span>:<span class="value"> none</span></span>;</span><br><span class="line"><span class="rule"><span class="attribute">user-select</span>:<span class="value"> none</span></span></span><br></pre></td></tr></table></figure></p>
+<h2 id="width_height">width height</h2><ul>
+<li>一个元素的width是指<span class="mark"><strong>左<abbr title="padding">内边界</abbr>到右内边界的距离。</strong><span> （这是内容区的宽度）  </span></span></li>
+</ul>
+<p>如果没有显示指定元素的width，那么默认为<strong>父元素的width</strong>。   </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">body</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="title">p</span>&gt;</span>Alex Tseng<span class="tag">&lt;/<span class="title">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>下图为继承了body的width：</p>
+<p><img src="/img/parentWidth.png" alt="">    </p>
+<p>一个元素的height是指<span class="mark"><strong>上<abbr title="padding">内边界</abbr>到下内边界的距离。</strong></span></p>
+<h3 id="通过3个属性设置为auto：width,margin-left,margin-right">通过3个属性设置为auto：width,margin-left,margin-right</h3><p><span class="mark">若width为auto，则自动计算达到父元素width所需的宽度。</span><strong>(width默认为auto)</strong><br>若设置其中两个，另外一个为auto，则该属性值会自动计算所需宽度来满足元素框的width等于父元素内容区的width。<br>若margin-left,margin-right都设为auto，则该元素<strong>在父元素中居中</strong>。(每个元素相对于其包含块摆放) (text-align是将内联内容居中)    </p>
+<p class="mark"><strong>元素框 = 元素width + 内边距padding</strong> </p>
+
+
+
+<h2 id="垂直居中">垂直居中</h2><p>左右外边距为auto时会居中。<br>但上下外边距设为auto时，<strong>会为0，不是居中。</strong></p>
+<h2 id="浮动元素">浮动元素</h2><p>浮动元素的左右外边界受限于包含块的左右内边界。(父元素边界)<br>浮动元素的顶端不能比之前所有浮动元素或块级元素更高。</p>
+<pre><code><span class="attribute">clear</span>：<span class="attribute">left</span>;
+</code></pre><p>确保左边没有浮动元素。</p>
+<h2 id="定位_position">定位 position</h2><ul>
+<li>static (default)</li>
+<li>relative (原本所占的空间仍保留)</li>
+<li>absolute (<strong>相对于包含块定位</strong>，原先空间删除)</li>
+<li>fixed (包含块为窗口本身)</li>
+<li><strong>inherit</strong></li>
+</ul>
+<p>偏移属性(offset properties)。top、right、bottom、left。<br>偏移是相对于<strong>元素的外边距边界</strong>。</p>
+<h2 id="内容溢出_overflow">内容溢出 overflow</h2><ul>
+<li>visible (default) (元素的内容在元素框外可见)</li>
+<li>hidden </li>
+<li>scroll (使用滚动条来显示溢出内容)</li>
+<li>auto</li>
+</ul>
+<h2 id="内容剪裁_clip">内容剪裁 clip</h2><ul>
+<li>rect(top,right,bottom,left)</li>
+<li>auto</li>
+</ul>
+<p>应用于绝对定位元素。<br><strong>rect的值是距元素左上角的距离</strong>，类似于元素框偏移后截取里面的内容。</p>
+<h2 id="元素可见性_visibility">元素可见性 visibility</h2><ul>
+<li>visible</li>
+<li>hidden (仍然影响文档布局)</li>
+<li>collapse</li>
+</ul>
+<h2 id="绝对定位">绝对定位</h2><p>绝对定位元素的包含块是<strong>最近的position值不为static</strong>的祖先元素。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/css/" rel="tag">#css</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/04/23/secrets-of-javascript-ninja读书笔记1/" rel="prev">secrets of Javascript Ninja读书笔记1</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/04/03/javascript学习笔记2/" rel="next">javascript学习笔记2</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2014/04/23/css权威指南读书笔记1/"
+                   data-title="css权威指南读书笔记1" data-url="http://yoursite.com/2014/04/23/css权威指南读书笔记1/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="https://avatars0.githubusercontent.com/u/5821394?v=3&s=460" alt="zengguanming" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">zengguanming</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#上下文选择符"><span class="nav-number">1.</span> <span class="nav-text">上下文选择符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ID和类选择符"><span class="nav-number">2.</span> <span class="nav-text">ID和类选择符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么时候用ID，什么时候用类"><span class="nav-number">3.</span> <span class="nav-text">什么时候用ID，什么时候用类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#属性选择符"><span class="nav-number">4.</span> <span class="nav-text">属性选择符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#伪类"><span class="nav-number">5.</span> <span class="nav-text">伪类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#伪元素"><span class="nav-number">6.</span> <span class="nav-text">伪元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基线"><span class="nav-number">7.</span> <span class="nav-text">基线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#行距_行高"><span class="nav-number">8.</span> <span class="nav-text">行距 行高</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对齐方式"><span class="nav-number">9.</span> <span class="nav-text">对齐方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字体_em"><span class="nav-number">10.</span> <span class="nav-text">字体 em</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#border属性"><span class="nav-number">11.</span> <span class="nav-text">border属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#user-select"><span class="nav-number">12.</span> <span class="nav-text">user-select</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#width_height"><span class="nav-number">13.</span> <span class="nav-text">width height</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#通过3个属性设置为auto：width,margin-left,margin-right"><span class="nav-number">13.1.</span> <span class="nav-text">通过3个属性设置为auto：width,margin-left,margin-right</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#垂直居中"><span class="nav-number">14.</span> <span class="nav-text">垂直居中</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浮动元素"><span class="nav-number">15.</span> <span class="nav-text">浮动元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定位_position"><span class="nav-number">16.</span> <span class="nav-text">定位 position</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内容溢出_overflow"><span class="nav-number">17.</span> <span class="nav-text">内容溢出 overflow</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内容剪裁_clip"><span class="nav-number">18.</span> <span class="nav-text">内容剪裁 clip</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#元素可见性_visibility"><span class="nav-number">19.</span> <span class="nav-text">元素可见性 visibility</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#绝对定位"><span class="nav-number">20.</span> <span class="nav-text">绝对定位</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zengguanming</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"hialex"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

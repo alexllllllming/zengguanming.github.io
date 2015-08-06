@@ -1,0 +1,784 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+
+
+  <meta name="keywords" content="读书笔记," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="##作用域
+js中的作用域是函数作用域非块作用域。
+变量的作用域是从声明的开始到函数的结束。
+命名函数是存在于它所声明的整个scope。(hoisting)
+全局域也类似于被一个大的函数所包裹着。
+函数调用与参数传递四种途径调用函数
+
+直接作为function被调用
+作为对象的方法被调用
+作为构造函数被调用
+通过apply()或call()被调用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="secrets of Javascript Ninja读书笔记1">
+<meta property="og:url" content="http://yoursite.com/2014/04/23/secrets-of-javascript-ninja读书笔记1/index.html">
+<meta property="og:site_name" content="Begin">
+<meta property="og:description" content="##作用域
+js中的作用域是函数作用域非块作用域。
+变量的作用域是从声明的开始到函数的结束。
+命名函数是存在于它所声明的整个scope。(hoisting)
+全局域也类似于被一个大的函数所包裹着。
+函数调用与参数传递四种途径调用函数
+
+直接作为function被调用
+作为对象的方法被调用
+作为构造函数被调用
+通过apply()或call()被调用">
+<meta property="og:updated_time" content="2015-08-06T03:46:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="secrets of Javascript Ninja读书笔记1">
+<meta name="twitter:description" content="##作用域
+js中的作用域是函数作用域非块作用域。
+变量的作用域是从声明的开始到函数的结束。
+命名函数是存在于它所声明的整个scope。(hoisting)
+全局域也类似于被一个大的函数所包裹着。
+函数调用与参数传递四种途径调用函数
+
+直接作为function被调用
+作为对象的方法被调用
+作为构造函数被调用
+通过apply()或call()被调用">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> secrets of Javascript Ninja读书笔记1 | Begin </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?48021ee644688ca93434cdf9a85d3cb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Begin</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              secrets of Javascript Ninja读书笔记1
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-04-23T16:08:08+08:00" content="2014-04-23">
+            2014-04-23
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2014/04/23/secrets-of-javascript-ninja读书笔记1/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2014/04/23/secrets-of-javascript-ninja读书笔记1/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>##作用域</p>
+<p><strong>js中的作用域是函数作用域非块作用域。</strong></p>
+<p>变量的作用域是从声明的开始到函数的结束。</p>
+<p>命名函数是存在于它所声明的<strong>整个scope</strong>。(hoisting)</p>
+<p>全局域也类似于被一个大的函数所包裹着。</p>
+<h2 id="函数调用与参数传递">函数调用与参数传递</h2><p>四种途径调用函数</p>
+<ol>
+<li>直接作为function被调用</li>
+<li>作为对象的方法被调用</li>
+<li>作为构造函数被调用</li>
+<li>通过apply()或call()被调用<a id="more"></a>
+<h2 id="函数参数(parameter)">函数参数(parameter)</h2></li>
+</ol>
+<p>传入比声明的参数数量多或少都不会报错，这是因为javascript把所有传入参数都保存在<code>arguments</code>中。</p>
+<p>所有的函数调用都会默认传递两个参数：<code>arguments</code>、<code>this</code>；</p>
+<h2 id="this指针">this指针</h2><p>this指向函数的上下文(function context)。</p>
+<p>在java中，一个function中的this是指向该类的一个实例；在js中，this跟这个function在哪定义的，如何定义的没有关系，而是取决于这个function是<strong>如何被调用的</strong>。(function context OR invocation context)</p>
+<h2 id="构造函数(constructor_function)">构造函数(constructor function)</h2><p>构造函数创造了上下文环境，考虑以下情况：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Alex</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.fullName = <span class="string">"Alex Tseng"</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> alex = Alex();</span><br><span class="line"><span class="built_in">console</span>.log(alex.fullName); <span class="comment">// Alex Tseng</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">window</span>.fullName); <span class="comment">// Alex Tseng</span></span><br></pre></td></tr></table></figure></p>
+<p>fullName属性还是存在于window对象中，这不是我们想要的，而构造函数可以使其存在于创建的对象中。</p>
+<pre><code><span class="function"><span class="keyword">function</span> <span class="title">Alex</span>(<span class="params"></span>)</span>{
+    <span class="keyword">this</span>.fullName = <span class="string">"Alex Tseng"</span>;
+}
+<span class="keyword">var</span> alex = <span class="keyword">new</span> Alex();
+<span class="built_in">console</span>.log(alex.fullName); <span class="comment">// Alex Tseng</span>
+<span class="built_in">console</span>.log(<span class="built_in">window</span>.fullName); <span class="comment">// undefined</span>
+</code></pre><h2 id="apply()_and_call()">apply() and call()</h2><p>a mean to invoke a function and <strong>explicitly specify object we want as the function context</strong>.(these two methods exists in every functions.)</p>
+<p>apply是传一个参数数组，而call是传具体的参数。</p>
+<p><strong>useful when invoking callback function!</strong></p>
+<h2 id="inline_function">inline function</h2><p>内联函数名只在函数内可见。可用于递归。</p>
+<ul>
+<li>递归函数</li>
+</ul>
+<p>hardcoded dependencies ： this，对象属性<br>no dependencies : inline function   </p>
+<h2 id="function_properties">function properties</h2><p>用函数属性来记录计算过的值，当做cache使用！</p>
+<p>not pollute the scope.</p>
+<p>可以对类数组对象使用数组的方法，通过apply方法。</p>
+<h2 id="函数重载">函数重载</h2><p>In javascript, we overload function by inspecting the number and nature of the passed arguments.<br>利用argument参数来查看什么被传递进来，从而进行函数的重载。<br><strong>方法：闭包+匿名函数</strong></p>
+<pre><code><span class="function"><span class="keyword">function</span> <span class="title">addMethod</span>(<span class="params">object, name, fn</span>)</span>{
+    <span class="keyword">var</span> old = object[name];
+    object[name] = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+        <span class="keyword">if</span> (fn.length == <span class="built_in">arguments</span>.length)
+            <span class="keyword">return</span> fn.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);
+        <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> old == <span class="string">'function'</span>)
+            <span class="keyword">return</span> old.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);
+    };
+}
+
+<span class="keyword">var</span> ninjas = {
+    values : [<span class="string">"Dean Edwards"</span>, <span class="string">"Sam Stephenson"</span>, <span class="string">"Alex Russell"</span>]
+};
+
+addMethod(ninjas,<span class="string">"find"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+    <span class="keyword">return</span> <span class="keyword">this</span>.values;
+});
+
+addMethod(ninjas,<span class="string">"find"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">name</span>)</span>{
+    <span class="keyword">var</span> ret = [];
+    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.values.length; i++)
+        <span class="keyword">if</span> (<span class="keyword">this</span>.values[i].indexOf(name) == <span class="number">0</span>)
+            ret.push(<span class="keyword">this</span>.values[i]);
+    <span class="keyword">return</span> ret;
+})
+</code></pre><p><strong>arguments</strong> references a collection of all of the passed arguments.</p>
+<h2 id="detect_function_type">detect function type</h2><p>一些浏览器的typeof判断function结果会有点问题。<br>解决方法之一：   </p>
+<pre><code><span class="function"><span class="keyword">function</span> <span class="title">isFunction</span>(<span class="params">fn</span>)</span>{
+    <span class="keyword">return</span> <span class="built_in">Object</span>.prototype.toString.call(fn) === <span class="string">"[object Function]"</span>;
+}
+</code></pre><h2 id="closure">closure</h2><p>在函数<strong>外部作用域</strong>的所有变量，包括在inner function之后声明的变量都包含在closure中。</p>
+<h3 id="闭包的用处">闭包的用处</h3><p><strong>private variable:</strong></p>
+<p>定义私有变量，只有在函数内部才可以访问。</p>
+<pre><code><span class="function"><span class="keyword">function</span> <span class="title">Ninja</span><span class="params">()</span></span>{
+    <span class="comment">// different to this.feints = 0</span>
+    <span class="comment">// this private variable</span>
+    <span class="keyword">var</span> feints = <span class="number">0</span>;
+    <span class="keyword">this</span>.getFeints = <span class="function"><span class="keyword">function</span><span class="params">()</span></span>{
+        <span class="keyword">return</span> feints;
+    };
+
+    <span class="keyword">this</span>.feint = <span class="function"><span class="keyword">function</span><span class="params">()</span></span>{
+        feints++;
+    };
+}
+<span class="keyword">var</span> ninja = <span class="keyword">new</span> Ninja();
+ninja.feint(); 
+ninja.getFeints(); <span class="comment">// feints = 1</span>
+ninja.feints <span class="comment">// undefined</span>
+</code></pre><p><strong>在callback中访问outer data：</strong></p>
+<p>虽然可以直接将data定义在global scope中，但是定义在closure中可以不污染全局变量域。</p>
+<pre><code><span class="built_in">Function</span>.prototype.memoized = <span class="function"><span class="keyword">function</span>(<span class="params">key</span>)</span>{
+    <span class="keyword">this</span>._values = <span class="keyword">this</span>._values || {};
+    <span class="comment">// if cached,take it. Otherwise,compute and cached.</span>
+    <span class="keyword">return</span> <span class="keyword">this</span>._values[key] != <span class="literal">undefined</span> ?
+        <span class="keyword">this</span>._values[key] :
+        <span class="keyword">this</span>._values[key] = <span class="keyword">this</span>.apply(<span class="keyword">this</span>,<span class="built_in">arguments</span>);
+};
+
+<span class="built_in">Function</span>.prototype.memoize = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+    <span class="keyword">var</span> fn = <span class="keyword">this</span>;
+    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{
+        <span class="comment">// arguments belongs to the return function</span>
+        <span class="keyword">return</span> fn.memoized.apply(fn,<span class="built_in">arguments</span>);
+    };
+};
+
+<span class="keyword">var</span> isPrime = (<span class="function"><span class="keyword">function</span>(<span class="params">num</span>)</span>{
+    <span class="keyword">var</span> prime = num != <span class="number">1</span>;
+    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">2</span>;i &lt; num; i++){
+        <span class="keyword">if</span> (num % i == <span class="number">0</span>){
+            prime = <span class="literal">false</span>;
+            <span class="keyword">break</span>;
+        }
+    }
+    <span class="keyword">return</span> prime;
+}).memoize();
+
+<span class="built_in">console</span>.log(isPrime(<span class="number">25</span>))
+</code></pre><h2 id="函数柯里化_curry_function">函数柯里化 curry function</h2><p>固定部分参数，然后返回一个新的函数。</p>
+<h2 id="array-like对象转换成数组">array-like对象转换成数组</h2><p>无参的slice方法。</p>
+<pre><code><span class="keyword">var</span> testObject =  {
+    <span class="number">0</span> : <span class="string">"ALexTseng"</span>,
+    <span class="number">1</span> : <span class="string">"25"</span>,
+    <span class="number">2</span> : <span class="string">"working hard"</span>,
+    length : <span class="string">"3"</span>
+};
+<span class="keyword">var</span> testArray = <span class="built_in">Array</span>.prototype.slice.call(testObject);
+<span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype.toString.call(testObject)); <span class="comment">//[object Object] </span>
+<span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype.toString.call(testArray))     <span class="comment">//[object Array] </span>
+</code></pre><h2 id="function_wrapping">function wrapping</h2><p>安全地重写了已有的方法，而且还保留对原有方法的访问，以针对原有方法适合的特殊情况。</p>
+<pre><code>function wrap(<span class="keyword">object</span>, <span class="keyword">method</span>, wrapper){
+    // keep the originnal <span class="keyword">method</span>
+    <span class="keyword">var</span> fn = <span class="keyword">object</span>[<span class="keyword">method</span>];
+    <span class="keyword">return</span> <span class="keyword">object</span>[<span class="keyword">method</span>] = function(){
+        <span class="keyword">return</span> wrapper.apply(this, [fn.<span class="keyword">bind</span>(this)].concat(
+                <span class="type">Array</span>.prototype.slice.call(arguments)));
+    };
+}
+
+<span class="keyword">if</span> (<span class="type">Prototype</span>.<span class="type">Browser</span>.<span class="type">Opera</span>){
+    wrap(<span class="type">Element</span>.<span class="type">Methods</span>, <span class="string">"readAttribute"</span>,function(original, elem, attr){
+        <span class="keyword">return</span> attr == <span class="string">"title"</span> ?
+            elem.title:
+            original(elem,attr);
+    });
+</code></pre></span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/读书笔记/" rel="tag">#读书笔记</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/04/25/奇异值分解svd/" rel="prev">奇异值分解SVD</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/04/23/css权威指南读书笔记1/" rel="next">css权威指南读书笔记1</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2014/04/23/secrets-of-javascript-ninja读书笔记1/"
+                   data-title="secrets of Javascript Ninja读书笔记1" data-url="http://yoursite.com/2014/04/23/secrets-of-javascript-ninja读书笔记1/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="https://avatars0.githubusercontent.com/u/5821394?v=3&s=460" alt="zengguanming" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">zengguanming</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#函数调用与参数传递"><span class="nav-number">1.</span> <span class="nav-text">函数调用与参数传递</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数参数(parameter)"><span class="nav-number">2.</span> <span class="nav-text">函数参数(parameter)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#this指针"><span class="nav-number">3.</span> <span class="nav-text">this指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构造函数(constructor_function)"><span class="nav-number">4.</span> <span class="nav-text">构造函数(constructor function)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#apply()_and_call()"><span class="nav-number">5.</span> <span class="nav-text">apply() and call()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#inline_function"><span class="nav-number">6.</span> <span class="nav-text">inline function</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#function_properties"><span class="nav-number">7.</span> <span class="nav-text">function properties</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数重载"><span class="nav-number">8.</span> <span class="nav-text">函数重载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#detect_function_type"><span class="nav-number">9.</span> <span class="nav-text">detect function type</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#closure"><span class="nav-number">10.</span> <span class="nav-text">closure</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#闭包的用处"><span class="nav-number">10.1.</span> <span class="nav-text">闭包的用处</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数柯里化_curry_function"><span class="nav-number">11.</span> <span class="nav-text">函数柯里化 curry function</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#array-like对象转换成数组"><span class="nav-number">12.</span> <span class="nav-text">array-like对象转换成数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#function_wrapping"><span class="nav-number">13.</span> <span class="nav-text">function wrapping</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zengguanming</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"hialex"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

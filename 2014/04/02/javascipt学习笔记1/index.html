@@ -1,0 +1,750 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+
+
+  <meta name="keywords" content="读书笔记," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="要重点理解作用域链、执行环境、变量对象的关系;js脚本内嵌与外部引入的基本场景，如何选择，这篇文章有讲到；如果是使用XHTML标准来编写网页，那么与javascript共存的一些问题，这篇文章有细说。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javascript学习笔记1">
+<meta property="og:url" content="http://yoursite.com/2014/04/02/javascipt学习笔记1/index.html">
+<meta property="og:site_name" content="Begin">
+<meta property="og:description" content="要重点理解作用域链、执行环境、变量对象的关系;js脚本内嵌与外部引入的基本场景，如何选择，这篇文章有讲到；如果是使用XHTML标准来编写网页，那么与javascript共存的一些问题，这篇文章有细说。">
+<meta property="og:image" content="http://yoursite.com/img/SVCOPY.png">
+<meta property="og:image" content="http://yoursite.com/img/OCOPY.png">
+<meta property="og:updated_time" content="2015-08-06T03:46:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="javascript学习笔记1">
+<meta name="twitter:description" content="要重点理解作用域链、执行环境、变量对象的关系;js脚本内嵌与外部引入的基本场景，如何选择，这篇文章有讲到；如果是使用XHTML标准来编写网页，那么与javascript共存的一些问题，这篇文章有细说。">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> javascript学习笔记1 | Begin </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?48021ee644688ca93434cdf9a85d3cb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Begin</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              javascript学习笔记1
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-04-02T23:53:30+08:00" content="2014-04-02">
+            2014-04-02
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2014/04/02/javascipt学习笔记1/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2014/04/02/javascipt学习笔记1/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>要重点理解作用域链、执行环境、变量对象的关系;<br>js脚本内嵌与外部引入的基本场景，如何选择，这篇<a href="http://developer.yahoo.com/performance/rules.html#external" target="_blank" rel="external">文章</a>有讲到；<br>如果是使用XHTML标准来编写网页，那么与javascript共存的一些问题，这篇文章有<a href="http://javascript.about.com/library/blxhtml.htm" target="_blank" rel="external">细说</a>。</p>
+<a id="more"></a>
+<h2 id="JavaScript的产生">JavaScript的产生</h2><p>希望能够在客户端完成一些基本的表单验证。</p>
+<h2 id="JavaScript的组成">JavaScript的组成</h2><ul>
+<li>核心(ECMAScript)</li>
+<li>文档对象模型(DOM)    </li>
+<li>浏览器对象模型(BOM）(Browser Object Model)</li>
+</ul>
+<p>ECMAScript实现的宿主环境:</p>
+<ul>
+<li>Web浏览器</li>
+<li>Node(服务器端javascript平台)</li>
+<li>Adobe Flash(ActionSript)</li>
+</ul>
+<h2 id="引入外部javascript">引入外部javascript</h2><p><code>&lt;script type = &quot;text/javascript&quot; src = &quot;eaxamle.js&quot;&gt;&lt;/script&gt;</code></p>
+<p>其中src可以指向外部域的URL。</p>
+<h2 id="javascript要内嵌还是引入？">javascript要内嵌还是引入？</h2><ol>
+<li><p>外部引入在大多数情况下会使页面显示地更快，因为它相比于内嵌更容易被浏览器所<strong>缓存</strong>(cached)。</p>
+</li>
+<li><p>内嵌减少了Http requests次数，但增加了html文档的大小。</p>
+</li>
+</ol>
+<p>根据<a href="http://developer.yahoo.com/performance/rules.html#external" target="_blank" rel="external">雅虎的建议</a>，最好的解决方案是在大多数情况下将javascript作为外部脚本引入，除了一种例外情形，那就是<strong>对于主页(home pages)而言，内嵌更适合</strong>。</p>
+<h2 id="XML_&amp;&amp;_DTD">XML &amp;&amp; DTD</h2><p><strong>DTD(Document Type Definition):</strong></p>
+<blockquote>
+<p>DTD是为XML制定的一系列规则(rules)，用严格的语法来描述文件的结构，从而来验证xml是否符合该规则。</p>
+</blockquote>
+<p>一个简单的例子，给出了xml文档和对应DTD，来源于<a href="http://webdesign.about.com/od/dtds/a/aa101700c.htm" title="A sample DTD" target="_blank" rel="external">http://webdesign.about.com/od/dtds/a/aa101700c.htm</a>：</p>
+<p><strong>The XML Document：</strong></p>
+<pre><code><span class="pi">&lt;?xml version="1.0" standalone="yes"?&gt;</span>
+<span class="tag">&lt;<span class="title">family</span>&gt;</span>  
+<span class="tag">&lt;<span class="title">title</span>&gt;</span>My Family<span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+<span class="tag">&lt;<span class="title">parent</span> <span class="attribute">role</span>=<span class="value">"mother"</span>&gt;</span>Judy<span class="tag">&lt;/<span class="title">parent</span>&gt;</span> 
+<span class="tag">&lt;<span class="title">parent</span> <span class="attribute">role</span>=<span class="value">"father"</span>&gt;</span>Layard<span class="tag">&lt;/<span class="title">parent</span>&gt;</span>   
+<span class="tag">&lt;<span class="title">child</span> <span class="attribute">role</span>=<span class="value">"daughter"</span>&gt;</span>Jennifer<span class="tag">&lt;/<span class="title">child</span>&gt;</span> 
+<span class="tag">&lt;<span class="title">image</span> <span class="attribute">source</span>=<span class="value">"JENN"</span> /&gt;</span>   
+<span class="tag">&lt;<span class="title">child</span> <span class="attribute">role</span>=<span class="value">"son"</span>&gt;</span>Brendan<span class="tag">&lt;/<span class="title">child</span>&gt;</span>   
+<span class="tag">&lt;/<span class="title">family</span>&gt;</span>  
+<span class="tag">&lt;/<span class="title">code</span>&gt;</span><span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</code></pre><p><strong>The DTD:</strong></p>
+<pre><code>&lt;<span class="exclamation_mark">!</span><span class="variable">DOCTYPE</span> <span class="function_or_atom">family</span> [
+   &lt;<span class="exclamation_mark">!</span><span class="variable">ELEMENT</span> <span class="function_or_atom">title</span> (#<span class="variable">PCDATA</span>)&gt;
+   &lt;<span class="exclamation_mark">!</span><span class="variable">ELEMENT</span> <span class="function_or_atom">parent</span> (#<span class="variable">PCDATA</span>)&gt;
+   &lt;<span class="exclamation_mark">!</span><span class="variable">ATTLIST</span> <span class="function_or_atom">parent</span> <span class="function_or_atom">role</span> (<span class="function_or_atom">mother</span> | <span class="function_or_atom">father</span>) #<span class="function_or_atom">required</span>&gt;
+   &lt;<span class="exclamation_mark">!</span><span class="variable">ELEMENT</span> <span class="function_or_atom">child</span> (#<span class="variable">PCDATA</span>)&gt;
+   &lt;<span class="exclamation_mark">!</span><span class="variable">ATTLIST</span> <span class="function_or_atom">child</span> <span class="function_or_atom">role</span> (<span class="function_or_atom">daughter</span> | <span class="function_or_atom">son</span>) #<span class="function_or_atom">required</span>&gt;
+   &lt;<span class="exclamation_mark">!</span><span class="variable">NOTATION</span> <span class="function_or_atom">gif</span> <span class="function_or_atom">system</span> <span class="string">"image/gif"</span>&gt;
+&lt;<span class="exclamation_mark">!</span><span class="variable">ENTITY</span> <span class="variable">JENN</span> <span class="function_or_atom">system</span>
+   <span class="string">"http://images.about.com/sites/guidepics/html.gif"</span>
+   <span class="variable">NDATA</span> <span class="function_or_atom">gif</span>&gt;
+   &lt;<span class="exclamation_mark">!</span><span class="variable">ELEMENT</span> <span class="function_or_atom">image</span> <span class="function_or_atom">empty</span>&gt;
+   &lt;<span class="exclamation_mark">!</span><span class="variable">ATTLIST</span> <span class="function_or_atom">image</span> <span class="function_or_atom">source</span> <span class="function_or_atom">entity</span> #<span class="function_or_atom">required</span>&gt;
+   &lt;<span class="exclamation_mark">!</span><span class="variable">ENTITY</span> <span class="function_or_atom">footer</span> <span class="string">"Brought to you by Jennifer Kyrnin"</span>&gt;
+]&gt;
+</code></pre><h2 id="html的发展轨迹">html的发展轨迹</h2><ul>
+<li>1995年，HTML2.0</li>
+<li>1997年，HTML3.2</li>
+<li>1998年，HTML4.0</li>
+<li>1999年，HTML4.01，在这之后W3C宣布不再有新版的html，而是转向XHTML。</li>
+<li>2000年，XHTML，但是由于其严格的结构规范没有得到开发者的认可，所以WHATWG开始着手新版html。</li>
+<li>2004年，HTML5</li>
+</ul>
+<h2 id="DOCTYPE">DOCTYPE</h2><p>doctype指明当前网页所遵循的标准，<strong>指出阅读程序应该用什么规则集来解释文档中的标记。</strong><br>在完整的doctype声明中，要包括相应的文档类型定义（DTD）文件的URL。<br>浏览器对doctype声明的形式和格式非常敏感，如果不能识别一个形式错误的doctype，就会强制进入Quirks模式。</p>
+<ul>
+<li>HTML 4.01 Strict：&lt;!DOCTYPE HTML PUBLIC “-//W3C//DTD HTML 4.01//EN” “<a href="http://www.w3.org/TR/html4/strict.dtd&quot;&gt;" target="_blank" rel="external">http://www.w3.org/TR/html4/strict.dtd&quot;&gt;</a></li>
+<li>HTML 4.01 Transitional：&lt;!DOCTYPE HTML PUBLIC “-//W3C//DTD HTML 4.01 Transitional//EN” “<a href="http://www.w3.org/TR/html4/loose.dtd&quot;&gt;" target="_blank" rel="external">http://www.w3.org/TR/html4/loose.dtd&quot;&gt;</a></li>
+<li>HTML 4.01 Frameset：&lt;!DOCTYPE HTML PUBLIC “-//W3C//DTD HTML 4.01 Frameset//EN” “<a href="http://www.w3.org/TR/html4/frameset.dtd&quot;&gt;" target="_blank" rel="external">http://www.w3.org/TR/html4/frameset.dtd&quot;&gt;</a></li>
+<li>XHTML 1.0 Strict：&lt;!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Strict//EN” “<a href="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&quot;&gt;" target="_blank" rel="external">http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&quot;&gt;</a></li>
+<li>XHTML 1.0 Transitional：&lt;!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Transitional//EN” “<a href="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;" target="_blank" rel="external">http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;</a></li>
+</ul>
+<p>过渡的DTD(XHTML 1.0 Transitional)允许我们使用表现层的标识、元素和属性，例如用于排版的表格、背景颜色标识等。在XHTML中标识是用来表示结构的，而不是用来实现表现形式，<strong>我们过渡的目的是最终实现数据和表现相分离</strong>。</p>
+<h2 id="CDATA">CDATA</h2><p>a CDATA(character data) section is a section of element content that is marked for the parser to interpret as <strong>only character data, not markup</strong>.<a href="http://en.wikipedia.org/wiki/CDATA" target="_blank" rel="external">(wiki)</a></p>
+<p>e..g: </p>
+<pre><code>![CDATA<span class="annotation">[&lt;sender&gt;John Smith&lt;/sender&gt;]</span>]&gt;
+<span class="comment">//will be interpreted as :</span>
+&amp;lt;sender&amp;gt;John Smith&amp;lt;/sender&amp;gt;
+</code></pre><p><strong>如果网页是以xhtml的标准来写的</strong>，那么script tags里面的代码就会被当成PCDATA(parsed character data)，所以要用CDATA来解决这个问题。</p>
+<p>根据这样的思路，应该是这样的形式。</p>
+<pre><code><span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="handlebars"><span class="xml">
+<span class="cdata">&lt;![CDATA[
+// content of your Javascript goes here
+]]&gt;</span>
+</span></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+</code></pre><p>这样的话可以使验证器(validator)通过，但是对于一些不包含CDATA标签的比较旧的浏览器，<strong>会导致标签内的js代码无法执行</strong>。</p>
+<p>幸运的是，javascript中的<strong>多行注释</strong>不会引起验证错误，所以可以同时解决旧浏览器和验证器问题。</p>
+<pre><code><span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="handlebars"><span class="xml">
+/* <span class="cdata">&lt;![CDATA[ */
+// content of your Javascript goes here
+/* ]]&gt;</span> */
+</span></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+</code></pre><p>参考于<a href="http://javascript.about.com/library/blxhtml.htm" target="_blank" rel="external">javascipte and XHTML</a></p>
+<h2 id="变量">变量</h2><p>javascript中的变量是松散类型变量，所谓<strong>松散类型</strong>就是可以用来保存任何类型的数据(不需要像C++，java一样声明变量的类型)。  </p>
+<pre><code><span class="variable"><span class="keyword">var</span> message</span> = <span class="string">"Hello world!"</span>;
+<span class="variable"><span class="keyword">var</span> message</span> = <span class="number">123</span>;
+</code></pre><p>如果省略<code>var</code>操作符，则声明为<strong>全局变量</strong>：</p>
+<pre><code><span class="keyword">message</span> = <span class="string">"Hello world!"</span>;
+</code></pre><h2 id="数据类型">数据类型</h2><p>5种基本数据类型。</p>
+<ul>
+<li>Undefined (未对基本类型进行初始化时，默认为undefined) (只有一个值的类型)</li>
+<li>Null        (null值表示空对象指针）(只有一个值null)</li>
+<li>Boolean    （true,false) (<strong>所有类型的值都可以等价转换为这两个值</strong>)（转型函数Boolean()）</li>
+<li>Number        (转型函数Number())</li>
+<li>String</li>
+</ul>
+<p>1种复杂数据类型。</p>
+<ul>
+<li>Object</li>
+</ul>
+<p><code>typeof</code>返回给定变量或数值字面量的数据类型。</p>
+<h2 id="块级作用域">块级作用域</h2><p>在javascript中不存在块级作用域，e..g:</p>
+<pre><code><span class="keyword">var</span> <span class="keyword">count</span> = 10;
+<span class="keyword">for</span>(<span class="keyword">var</span> i = 0; i &lt; <span class="keyword">count</span>; i++){
+    alert(i);
+}
+alert(i); <span class="comment">//依然能访问</span>
+</code></pre><h2 id="函数参数">函数参数</h2><p>在javascript中，<strong>命名的参数只提供便利，但不是必需的。</strong>因为js的解析器不会验证命名参数，也不会关心传入的参数数量是否与定义的符合。   </p>
+<p>因为参数的<strong>内部表示是一个数组</strong>，所以不关心包含了多少参数。在函数内部可以通过<code>arguments</code>对象来访问这个参数数组。</p>
+<p>e..g:</p>
+<pre><code><span class="function">function <span class="title">countArgs</span><span class="params">()</span></span>{
+    alert(arguments.length);
+}
+countArgs(<span class="number">1</span>);     <span class="comment">//1</span>
+countArgs(<span class="number">1</span>,<span class="number">2</span>);      <span class="comment">//2</span>
+countArgs(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)  <span class="comment">//3</span>
+</code></pre><p><strong>所有参数传递都是值，不可能通过引用传递参数。</strong><br><strong>没有函数重载！</strong></p>
+<h2 id="变量的复制">变量的复制</h2><p>基本类型变量</p>
+<p><img src="/img/SVCOPY.png" alt=""></p>
+<p>引用类型变量复制，保存的是一个指针。</p>
+<p><img src="/img/OCOPY.png" alt=""></p>
+<p>函数参数是按值传递的。即使是引用类型也是按值传递，复制指针。</p>
+<p>检测变量类型</p>
+<p><code>typeof</code><br><code>instanceof</code></p>
+<h2 id="执行环境_作用域">执行环境 作用域</h2><h3 id="执行环境_（execution_context）">执行环境 （execution context）</h3><p>每个执行环境都有一个与之关联的<strong>变量对象。</strong><br>某个执行环境中所有代码执行完毕后，<strong>该环境被销毁，保存其中的所有变量和函数定义也被销毁。</strong></p>
+<p>全局执行环境，所有全局变量和函数都属于windows对象。<br>函数执行环境。</p>
+<h3 id="作用域">作用域</h3><p>当代码在一个环境中执行时，会创建<strong>变量对象</strong>的一个<strong>作用域链</strong>(scope chain)。<br><strong>作用域链的前端</strong>始终都是当前执行代码所在的环境变量对象，全局执行环境的变量对象始终都是作用域链中的<strong>最后一个对象</strong>。</p>
+<h3 id="标识符解析">标识符解析</h3><p><strong>沿着作用域链一级一级地搜索，从作用域链的前端看是逐级向后。</strong><br>每个环境都可以向上搜索作用域链，查询变量和函数名。(生成链与在链中查询是反方向的。)</p>
+<p><strong>var声明的变量会被添加到最近的环境中</strong></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/读书笔记/" rel="tag">#读书笔记</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/04/03/javascript学习笔记2/" rel="prev">javascript学习笔记2</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/03/27/user-based-collaborative-filtering-recommendation/" rel="next">基于用户的协同过滤推荐</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2014/04/02/javascipt学习笔记1/"
+                   data-title="javascript学习笔记1" data-url="http://yoursite.com/2014/04/02/javascipt学习笔记1/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="https://avatars0.githubusercontent.com/u/5821394?v=3&s=460" alt="zengguanming" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">zengguanming</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JavaScript的产生"><span class="nav-number">1.</span> <span class="nav-text">JavaScript的产生</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JavaScript的组成"><span class="nav-number">2.</span> <span class="nav-text">JavaScript的组成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引入外部javascript"><span class="nav-number">3.</span> <span class="nav-text">引入外部javascript</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#javascript要内嵌还是引入？"><span class="nav-number">4.</span> <span class="nav-text">javascript要内嵌还是引入？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XML_&&_DTD"><span class="nav-number">5.</span> <span class="nav-text">XML && DTD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#html的发展轨迹"><span class="nav-number">6.</span> <span class="nav-text">html的发展轨迹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DOCTYPE"><span class="nav-number">7.</span> <span class="nav-text">DOCTYPE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CDATA"><span class="nav-number">8.</span> <span class="nav-text">CDATA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#变量"><span class="nav-number">9.</span> <span class="nav-text">变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据类型"><span class="nav-number">10.</span> <span class="nav-text">数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#块级作用域"><span class="nav-number">11.</span> <span class="nav-text">块级作用域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数参数"><span class="nav-number">12.</span> <span class="nav-text">函数参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#变量的复制"><span class="nav-number">13.</span> <span class="nav-text">变量的复制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#执行环境_作用域"><span class="nav-number">14.</span> <span class="nav-text">执行环境 作用域</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#执行环境_（execution_context）"><span class="nav-number">14.1.</span> <span class="nav-text">执行环境 （execution context）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#作用域"><span class="nav-number">14.2.</span> <span class="nav-text">作用域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标识符解析"><span class="nav-number">14.3.</span> <span class="nav-text">标识符解析</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zengguanming</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"hialex"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

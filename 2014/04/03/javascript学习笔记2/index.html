@@ -1,0 +1,818 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+
+
+  <meta name="keywords" content="javascript," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="对于this说明。推荐一篇文章，感觉讲得挺具体易懂的。here对于apply()，call()，bind()的用法，也可以看上面作者的另外一篇文章。here    
+下面是一些笔记记录，例子大部分来自于以上两篇文章或书上。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javascript学习笔记2">
+<meta property="og:url" content="http://yoursite.com/2014/04/03/javascript学习笔记2/index.html">
+<meta property="og:site_name" content="Begin">
+<meta property="og:description" content="对于this说明。推荐一篇文章，感觉讲得挺具体易懂的。here对于apply()，call()，bind()的用法，也可以看上面作者的另外一篇文章。here    
+下面是一些笔记记录，例子大部分来自于以上两篇文章或书上。">
+<meta property="og:updated_time" content="2015-08-06T03:46:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="javascript学习笔记2">
+<meta name="twitter:description" content="对于this说明。推荐一篇文章，感觉讲得挺具体易懂的。here对于apply()，call()，bind()的用法，也可以看上面作者的另外一篇文章。here    
+下面是一些笔记记录，例子大部分来自于以上两篇文章或书上。">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> javascript学习笔记2 | Begin </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?48021ee644688ca93434cdf9a85d3cb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Begin</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              javascript学习笔记2
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-04-03T21:20:04+08:00" content="2014-04-03">
+            2014-04-03
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2014/04/03/javascript学习笔记2/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2014/04/03/javascript学习笔记2/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>对于<em>this</em>说明。推荐一篇文章，感觉讲得挺具体易懂的。<a href="http://javascriptissexy.com/understand-javascripts-this-with-clarity-and-master-it/" target="_blank" rel="external">here</a><br>对于apply()，call()，bind()的用法，也可以看上面作者的另外一篇文章。<a href="http://javascriptissexy.com/javascript-apply-call-and-bind-methods-are-essential-for-javascript-professionals/" target="_blank" rel="external">here</a>    </p>
+<p>下面是一些笔记记录，例子大部分来自于以上两篇文章或书上。</p>
+<a id="more"></a>
+<h2 id="创建对象实例">创建对象实例</h2><ol>
+<li><p>new操作符加构造函数     </p>
+<p>var object = new Object();<br>object.name = “AlexTseng”;<br>object.age = 24;</p>
+</li>
+<li><p>对象字面量表示法</p>
+<p> var object = {</p>
+<pre><code><span class="string">name :</span> <span class="string">"AlexTseng"</span>,
+<span class="string">age :</span> <span class="number">24</span>
+</code></pre><p> };</p>
+</li>
+</ol>
+<h2 id="Array类型">Array类型</h2><p>数组的每一项可以保存<strong>任何类型</strong>的数据，数组的大小是<strong>动态调整</strong>的。</p>
+<pre><code><span class="keyword">var</span> colors = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="string">"red"</span>, <span class="string">"blue"</span>, <span class="string">"green"</span>);
+<span class="comment">//数组字面量</span>
+<span class="keyword">var</span> colors = [<span class="string">"red"</span>, <span class="string">"blue"</span>, <span class="string">"green"</span>];
+</code></pre><p>如果设置某个值的索引超过了当前项数，那么数组会自动增加到该索引加一的长度。</p>
+<p>利用length属性添加新项：</p>
+<pre><code>//不会像java有<span class="keyword">out</span> <span class="keyword">of</span> <span class="type">range</span>的困扰
+colors[colors.length] = <span class="string">"black"</span>;
+colors[colors.length] = <span class="string">"brown"</span>;
+</code></pre><h2 id="栈方法">栈方法</h2><p>push()<br>pop()</p>
+<h2 id="队列方法">队列方法</h2><p>shift() //类似于pop，不过是在前端移除项<br>push()</p>
+<h2 id="排序方法">排序方法</h2><p>reverse()<br>sort()</p>
+<p>sort方法默认是根据字符串来比较，通过调用每个项的toString()方法。<br>sort方法接受<strong>一个比较函数作为参数</strong>。</p>
+<blockquote>
+<p>如果第一个参数应该位于第二个之前则返回一个负数；相等则返回零；否则返回正数。</p>
+</blockquote>
+<h2 id="Function_类型">Function 类型</h2><p>函数实际上是对象，函数名实际上是指向函数对象的<strong>指针</strong>。<br>使用不带括号的函数名是访问函数指针，非调用函数。<br><strong>没有重载。</strong><br>函数的返回值可以为函数。<br>this引用的是<strong>函数执行环境的变量对象</strong>。</p>
+<p>函数声明语法定义：</p>
+<pre><code><span class="function"><span class="keyword">function</span> <span class="title">sum</span><span class="params">(num1, num2)</span></span>{
+    <span class="keyword">return</span> num1 + num2;
+}
+</code></pre><p>函数表达式定义：</p>
+<pre><code><span class="keyword">var</span> sum = <span class="function"><span class="keyword">function</span><span class="params">(num1, num2)</span></span>{
+    <span class="keyword">return</span> num1 + num2;
+};
+</code></pre><h2 id="函数声明与函数表达式的区别">函数声明与函数表达式的区别</h2><p>javascript引擎解析器会先读取声明，<strong>使其在执行任何代码之前可以访问</strong>；而函数表达式，则须等到他<strong>所在的代码被执行才会被解析</strong>。<br>这个过程叫做<strong>函数声明提升</strong>。</p>
+<pre><code>alert(<span class="built_in">sum</span>(<span class="number">1</span>,<span class="number">2</span>)); <span class="comment">//work</span>
+<span class="function"><span class="keyword">function</span> <span class="title">sum</span><span class="params">(num1, num2)</span>{</span>
+    <span class="keyword">return</span> num1 + num2;
+}
+--------------------------
+alert(<span class="built_in">sum</span>(<span class="number">1</span>,<span class="number">2</span>)); <span class="comment">// not work</span>
+var <span class="built_in">sum</span> = <span class="function"><span class="keyword">function</span><span class="params">(num1, num2)</span>{</span>
+    <span class="keyword">return</span> num1 + num2;
+}
+</code></pre><h2 id="函数属性和方法">函数属性和方法</h2><p>因为函数是对象，所以函数也有对应的属性和方法。</p>
+<p>每个函数都包含两个属性：</p>
+<ul>
+<li>length (表示命名参数的个数)</li>
+<li>prototype</li>
+</ul>
+<p>包含三个方法： (在特定作用域调用函数，等于是<strong>设置this引用的值</strong>)</p>
+<ul>
+<li>apply()</li>
+<li>call()</li>
+<li>bind()  //在ECMASCRIPT 5中定义</li>
+</ul>
+<h2 id="this引用">this引用</h2><p>在我推荐的那篇文章中，举了个生动的例子,类似于”小明在路边捡到了1分钱，他很开心”。这里的代词<em>他</em> 类似于javascript的“代词” <em>this</em> ，而代词所表示的对象，需要我们从上下文去判断。因此，要理解<em>this</em>必须要知道如何找到所表示的对象。</p>
+<p>有一点需要明确的是，当函数被执行时它会获得<em>this</em>属性，<strong>而<em>this</em>所指向的对象就是调用(invoke)这个函数的对象！*</strong>this*对象时在运行时基于函数的执行环境(context)绑定的。</p>
+<p><strong>匿名函数的执行环境具有全局性，</strong>当js运行在<strong>严格模式</strong>时，全局函数和匿名函数的 <em>this</em>指向undefined，不绑定任何对象。</p>
+<pre><code>var <span class="keyword">person</span> = {
+    firstName: <span class="string">"Alex"</span>,
+    lastName : <span class="string">"Tseng"</span>,
+    showFullName:function(){
+        alert(this.firstName + <span class="string">" "</span> + this.lastName);
+    }
+};
+<span class="keyword">person</span>.showFullName(); //Alex Tseng
+</code></pre><p>这里<em>this</em>指向的是person。</p>
+<p>文章中举了几个场景，在这些场景中<em>this</em>表现得有些诡异（tricky）:    </p>
+<h3 id="当this_被当做回调函数(callback)">当<em>this</em> 被当做回调函数(callback)</h3><p>引用的<a href="http://javascriptissexy.com/understand-javascripts-this-with-clarity-and-master-it/#Fix_this_when_used_in_a_method_passed_as_a_callback" target="_blank" rel="external">例子</a>：</p>
+<pre><code>var user = {
+    data:[
+    {name:<span class="string">"T. Woods"</span>, age:<span class="number">37</span>},
+    {name:<span class="string">"P. Mickelson"</span>, age:<span class="number">43</span>}
+],
+clickHandler:<span class="function"><span class="keyword">function</span> <span class="params">(event)</span> {</span>
+    var randomNum = <span class="params">(<span class="params">(Math.random <span class="params">()</span> * <span class="number">2</span> | <span class="number">0</span>)</span> + <span class="number">1</span>)</span> - <span class="number">1</span>; 
+    console.<span class="built_in">log</span> <span class="params">(this.data[randomNum].name + <span class="string">" "</span> + this.data[randomNum].age)</span>;
+}
+}
+$ <span class="params">(<span class="string">"button"</span>)</span>.click <span class="params">(user.clickHandler)</span>; <span class="comment">// Cannot read property '0' of undefined</span>
+</code></pre><p>这里看起来是<code>user</code>对象<strong>invoke</strong>了clickHandler函数，但是这里会产生错误且报错为属性不存在。这是因为真正的<em>this</em>指向其实是<strong>button对象</strong>。给出的解释是：</p>
+<blockquote>
+<p>Note that even though we are calling the clickHandler () method with user.clickHandler (which we have to do, since clickHandler is a method defined on user), the clickHandler () method itself will be <strong>executed with the button object as the context to which “this” now refers</strong>. So this now refers to is the button ($(“button”)) object.</p>
+</blockquote>
+<p>因为clickHandle函数时在button的上下文中被调用的，所以<em>this</em>指向会是button对象。<br>解决这样的“错误”，可以用<strong>bind(),apply(),call()函数来指定<em>this</em>的指向。</strong></p>
+<pre><code>$<span class="params">(<span class="string">"button"</span>)</span>.click <span class="params">(user.clickHandler.bind <span class="params">(user)</span>)</span>; <span class="comment">// P. Mickelson 43</span>
+</code></pre><h3 id="this_inside_closure"><code>this</code> inside closure</h3><pre><code>var user = {
+    tournament:<span class="string">"The Masters"</span>,
+    data      :<span class="comment">[
+    {name:"T. Woods", age:37},
+    {name:"P. Mickelson", age:43}
+]</span>,
+
+clickHandler:function () {
+    this.data.forEach (function (<span class="keyword">person</span>) {
+    console.log (<span class="string">"What is This referring to? "</span> + this); //<span class="comment">[object Window]</span>
+     console.log (<span class="keyword">person</span>.name + <span class="string">" is playing at "</span> + this.tournament);
+    // T. Woods <span class="keyword">is</span> playing at undefined
+    // P. Mickelson <span class="keyword">is</span> playing at undefined
+})
+}
+}
+user.clickHandler(); // What <span class="keyword">is</span> This referring to? <span class="comment">[object Window]</span>
+</code></pre><p>内部函数(inner)是不能直接访问外部中的<em>this</em>的，因为我们知道在作用域链中寻找标识符的规则，只要找到了第一个就不再继续向后寻找。而<strong>每个函数必然有两个属性arguments，this</strong>，所以根据寻找的规则，必然是自家的 <em>this</em>。</p>
+<p>如何解决呢？在外部函数中先保存<em>this</em>的值，然后再在内部中引用。</p>
+<pre><code><span class="keyword">var</span> <span class="literal">that</span> = <span class="keyword">this</span>;
+</code></pre><h3 id="when_method_is_assignede_to_variable">when method is assignede to variable</h3><p>看看文章中的例子就可以了，就不再详细说了，估计大家看了上述两个例子也差不多了解了。</p>
+<pre><code>var data = [
+    {name:<span class="string">"Samantha"</span>, age:<span class="number">12</span>},
+    {name:<span class="string">"Alexis"</span>, age:<span class="number">14</span>}
+];
+
+var user = {
+    data    :[
+    {name:<span class="string">"T. Woods"</span>, age:<span class="number">37</span>},
+    {name:<span class="string">"P. Mickelson"</span>, age:<span class="number">43</span>}
+],
+    showData:function (event) {
+        var randomNum = ((Math.random () * <span class="number">2</span> | <span class="number">0</span>) + <span class="number">1</span>) - <span class="number">1</span>; <span class="comment">// random number between 0 and 1</span>
+        console.<span class="built_in">log</span> (<span class="keyword">this</span>.data[randomNum].name + <span class="string">" "</span> + <span class="keyword">this</span>.data[randomNum].age);
+    }
+}
+<span class="comment">// Assign the user.showData to a variable</span>
+var showUserData = user.showData;
+
+<span class="comment">// When we execute the showUserData function, the values printed to the console are from the global data array, not from the data array in the user object    </span>
+showUserData (); <span class="comment">// Samantha 12 (from the global data array)</span>
+</code></pre><p>将函数指针赋值给一个全局变量后，<em>this</em>的指向为windows object，与原本的意图不合。<br>解决方法是：</p>
+<pre><code>// <span class="type">Bind</span> the showData <span class="keyword">method</span> to the user <span class="keyword">object</span>
+<span class="keyword">var</span> showUserData = user.showData.<span class="keyword">bind</span> (user);
+
+// <span class="type">Now</span> we get the value <span class="keyword">from</span> the user <span class="keyword">object</span>, because the this keyword <span class="keyword">is</span> bound to the user <span class="keyword">object</span>
+showUserData (); // P. <span class="type">Mickelson</span> <span class="number">43</span>    
+</code></pre><h2 id="bind()">bind()</h2><p><strong>Function Currying：</strong>    </p>
+<blockquote>
+<p>also known as partial function application, is the use of a function (that accept one or more arguments) that <strong>returns a new function with some of the arguments already set.</strong> </p>
+</blockquote>
+<pre><code> <span class="function"><span class="keyword">function</span> <span class="title">greet</span> <span class="params">(gender, age, name)</span> </span>{
+       <span class="comment">// if a male, use Mr., else use Ms.</span>
+       <span class="keyword">var</span> salutation = gender === <span class="string">"male"</span> ? <span class="string">"Mr. "</span> : <span class="string">"Ms. "</span>;
+
+       <span class="keyword">if</span> (age &gt; <span class="number">25</span>) {
+           <span class="keyword">return</span> <span class="string">"Hello, "</span> + salutation + name + <span class="string">"."</span>;
+           }
+       <span class="keyword">else</span> {
+           <span class="keyword">return</span> <span class="string">"Hey, "</span> + name + <span class="string">"."</span>;
+            }
+        }
+<span class="comment">//So we are passing null because we are not using the "this" keyword in our greet function.</span>
+<span class="keyword">var</span> greetAnAdultMale = greet.bind (<span class="literal">null</span>, <span class="string">"male"</span>, <span class="number">45</span>);
+greetAnAdultMale (<span class="string">"John Hartlove"</span>); <span class="comment">// "Hello, Mr. John Hartlove."</span>
+
+<span class="keyword">var</span> greetAYoungster = greet.bind (<span class="literal">null</span>, <span class="string">""</span>, <span class="number">16</span>);
+greetAYoungster (<span class="string">"Alex"</span>); <span class="comment">// "Hey, Alex."</span>
+greetAYoungster (<span class="string">"Emma Waterloo"</span>); <span class="comment">// "Hey, Emma Waterloo."     </span>
+</code></pre><h2 id="apply()_and_call()">apply() and call()</h2><p>作用：</p>
+<ol>
+<li>borrow function</li>
+<li>在调用函数时显示设置<em>this</em>值</li>
+<li>在apply函数时进行传参 (reating and executing variadic functions)</li>
+</ol>
+<h3 id="Borrowing_Functions_with_Apply_and_Call">Borrowing Functions with Apply and Call</h3><pre><code>var anArrayLikeObj = {<span class="number">0</span>:<span class="string">"Martin"</span>, <span class="number">1</span>:<span class="number">78</span>, <span class="number">2</span>:<span class="number">67</span>, <span class="number">3</span>:[<span class="string">"Letta"</span>, <span class="string">"Marieta"</span>,  <span class="string">"Pauline"</span>], length:<span class="number">4</span> };
+<span class="comment">// Make a quick copy and save the results in a real array:</span>
+<span class="comment">// First parameter sets the "this" value</span>
+var newArray = Array.prototype.slice.call <span class="params">(anArrayLikeObj, <span class="number">0</span>)</span>;
+
+console.<span class="built_in">log</span> <span class="params">(newArray)</span>; <span class="comment">// ["Martin", 78, 67, Array[3]]</span>
+
+<span class="comment">// Search for "Martin" in the array-like object</span>
+console.<span class="built_in">log</span> <span class="params">(Array.prototype.indexOf.call <span class="params">(anArrayLikeObj, <span class="string">"Martin"</span>)</span> === -<span class="number">1</span> ? <span class="literal">false</span> : <span class="literal">true</span>)</span>; <span class="comment">// true</span>
+<span class="comment">// Try using an Array method without the call () or apply ()</span>
+console.<span class="built_in">log</span> <span class="params">(anArrayLikeObj.indexOf <span class="params">(<span class="string">"Martin"</span>)</span> === -<span class="number">1</span> ? <span class="literal">false</span> : <span class="literal">true</span>)</span>; <span class="comment">// Error: Object has no method 'indexOf'</span>
+ <span class="comment">// Reverse the object:</span>
+console.<span class="built_in">log</span> <span class="params">(Array.prototype.reverse.call <span class="params">(anArrayLikeObj)</span>)</span>;
+<span class="comment">// {0: Array[3], 1: 67, 2: 78, 3: "Martin", length: 4}</span>
+
+<span class="comment">// Sweet. We can pop too:</span>
+console.<span class="built_in">log</span> <span class="params">(Array.prototype.pop.call <span class="params">(anArrayLikeObj)</span>)</span>;
+console.<span class="built_in">log</span> <span class="params">(anArrayLikeObj)</span>; <span class="comment">// {0: Array[3], 1: 67, 2: 78, length: 3}</span>
+
+<span class="comment">// What about push?</span>
+console.<span class="built_in">log</span> <span class="params">(Array.prototype.push.call <span class="params">(anArrayLikeObj, <span class="string">"Jackie"</span>)</span>)</span>;
+console.<span class="built_in">log</span> <span class="params">(anArrayLikeObj)</span>; <span class="comment">// {0: Array[3], 1: 67, 2: 78, 3: "Jackie", length: 4}</span>
+</code></pre><p>函数的属性<strong>arguments</strong>也是array-like对象，所以也可以对它使用apply和call。</p>
+<pre><code><span class="comment">// We do not define the function with any parameters, yet we can get all the arguments passed to it</span>
+<span class="function"><span class="keyword">function</span> <span class="title">doSomething</span> (<span class="params"></span>) </span>{
+<span class="keyword">var</span> args = <span class="built_in">Array</span>.prototype.slice.call (<span class="built_in">arguments</span>);
+<span class="built_in">console</span>.log (args);
+}
+
+doSomething (<span class="string">"Water"</span>, <span class="string">"Salt"</span>, <span class="string">"Glue"</span>); <span class="comment">// ["Water", "Salt", "Glue"]</span>
+</code></pre><h2 id="Use_Apply()_to_Execute_Variable-Arity_Functions">Use Apply() to Execute Variable-Arity Functions</h2><p>在javascript中 Math.max()是个多参数函数：</p>
+<pre><code>Math.max (<span class="number">23</span>, <span class="number">11</span>, <span class="number">34</span>, <span class="number">56</span>);<span class="comment">//56</span>
+</code></pre><p>但是当我们有一个数组时，如何传给max函数呢？就可以用到apply()。</p>
+<pre><code><span class="keyword">var</span> allNumbers = [<span class="number">23</span>, <span class="number">11</span>, <span class="number">34</span>, <span class="number">56</span>];
+// <span class="type">Using</span> the apply () <span class="keyword">method</span>, we can pass the <span class="type">array</span> <span class="keyword">of</span> numbers:
+console.log (<span class="type">Math</span>.max.apply (null, allNumbers)); // <span class="number">56</span>
+</code></pre><p>这里<em>this</em>设为null，是因为max内部并没使用到<em>this</em>。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag">#javascript</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/04/23/css权威指南读书笔记1/" rel="prev">css权威指南读书笔记1</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/04/02/javascipt学习笔记1/" rel="next">javascript学习笔记1</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2014/04/03/javascript学习笔记2/"
+                   data-title="javascript学习笔记2" data-url="http://yoursite.com/2014/04/03/javascript学习笔记2/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="https://avatars0.githubusercontent.com/u/5821394?v=3&s=460" alt="zengguanming" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">zengguanming</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建对象实例"><span class="nav-number">1.</span> <span class="nav-text">创建对象实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Array类型"><span class="nav-number">2.</span> <span class="nav-text">Array类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#栈方法"><span class="nav-number">3.</span> <span class="nav-text">栈方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#队列方法"><span class="nav-number">4.</span> <span class="nav-text">队列方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#排序方法"><span class="nav-number">5.</span> <span class="nav-text">排序方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Function_类型"><span class="nav-number">6.</span> <span class="nav-text">Function 类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数声明与函数表达式的区别"><span class="nav-number">7.</span> <span class="nav-text">函数声明与函数表达式的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数属性和方法"><span class="nav-number">8.</span> <span class="nav-text">函数属性和方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#this引用"><span class="nav-number">9.</span> <span class="nav-text">this引用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#当this_被当做回调函数(callback)"><span class="nav-number">9.1.</span> <span class="nav-text">当this 被当做回调函数(callback)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#this_inside_closure"><span class="nav-number">9.2.</span> <span class="nav-text">this inside closure</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#when_method_is_assignede_to_variable"><span class="nav-number">9.3.</span> <span class="nav-text">when method is assignede to variable</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bind()"><span class="nav-number">10.</span> <span class="nav-text">bind()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#apply()_and_call()"><span class="nav-number">11.</span> <span class="nav-text">apply() and call()</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Borrowing_Functions_with_Apply_and_Call"><span class="nav-number">11.1.</span> <span class="nav-text">Borrowing Functions with Apply and Call</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Use_Apply()_to_Execute_Variable-Arity_Functions"><span class="nav-number">12.</span> <span class="nav-text">Use Apply() to Execute Variable-Arity Functions</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zengguanming</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"hialex"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

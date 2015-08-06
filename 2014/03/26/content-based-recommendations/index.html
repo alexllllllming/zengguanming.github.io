@@ -1,0 +1,644 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+
+
+  <meta name="keywords" content="recommender system," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="上个学期跟了一节coursera的课Introduction to Recommender System，这个课程提供的是movielens的数据集的一部分，课程主要是围绕对电影的推荐，介绍了一些基础的推荐方法，算法的度量标准，算法参数的选择，算法分析等等。趁着还有些记忆，来写一些学完后的总结，顺便整理下自己学的东西。
+推荐系统是对user进行item的推荐，所以不可避免地我们要在item和use">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于内容的推荐">
+<meta property="og:url" content="http://yoursite.com/2014/03/26/content-based-recommendations/index.html">
+<meta property="og:site_name" content="Begin">
+<meta property="og:description" content="上个学期跟了一节coursera的课Introduction to Recommender System，这个课程提供的是movielens的数据集的一部分，课程主要是围绕对电影的推荐，介绍了一些基础的推荐方法，算法的度量标准，算法参数的选择，算法分析等等。趁着还有些记忆，来写一些学完后的总结，顺便整理下自己学的东西。
+推荐系统是对user进行item的推荐，所以不可避免地我们要在item和use">
+<meta property="og:image" content="http://yoursite.com/img/TFIDF.png">
+<meta property="og:image" content="http://yoursite.com/img/WeightedUserProfile.png">
+<meta property="og:image" content="http://yoursite.com/img/CosineSimilarity.png">
+<meta property="og:updated_time" content="2015-08-06T03:46:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于内容的推荐">
+<meta name="twitter:description" content="上个学期跟了一节coursera的课Introduction to Recommender System，这个课程提供的是movielens的数据集的一部分，课程主要是围绕对电影的推荐，介绍了一些基础的推荐方法，算法的度量标准，算法参数的选择，算法分析等等。趁着还有些记忆，来写一些学完后的总结，顺便整理下自己学的东西。
+推荐系统是对user进行item的推荐，所以不可避免地我们要在item和use">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> 基于内容的推荐 | Begin </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?48021ee644688ca93434cdf9a85d3cb3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Begin</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              基于内容的推荐
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-03-26T20:46:48+08:00" content="2014-03-26">
+            2014-03-26
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2014/03/26/content-based-recommendations/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2014/03/26/content-based-recommendations/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>上个学期跟了一节coursera的课<a href="https://class.coursera.org/recsys-001/class/index" target="_blank" rel="external">Introduction to Recommender System</a>，这个课程提供的是movielens的数据集的一部分，课程主要是围绕对电影的推荐，介绍了一些基础的推荐方法，算法的度量标准，算法参数的选择，算法分析等等。趁着还有些记忆，来写一些学完后的总结，顺便整理下自己学的东西。</p>
+<p>推荐系统是对user进行item的推荐，所以不可避免地我们要在item和user之间建立一种关联，哪一个item对哪一个user更有吸引力，或者哪一个item更应该推荐给哪一个user。因此，CB中一般包括三个方面：item，user， algorithm。</p>
+<p>课程主要提供了四份数据：</p>
+<ul>
+<li>电影数据，有电影的编号和电影的名称</li>
+<li>用户数据，用户的编号和用户的名称</li>
+<li>用户对电影的评分数据，用户的编号、电影的编号和对该电影的评分</li>
+<li>用户对电影的tag数据，用户的编号、电影的编号和用户对该电影贴的一个标签</li>
+</ul>
+<a id="more"></a> 
+<h2 id="Item_Representations">Item Representations</h2><p>重点在于如何去表示一个item，对于一个item可以有很多种的表示方法。如果我们要对餐馆进行推荐，每个餐馆就是一个item，那么我们可以用餐馆的介绍信息(名字，菜式，消费水平，位置…)去表示一个餐馆;或者我们可以用用户对餐馆的评价去表示一个餐馆。   </p>
+<p>前一种数据，我们称之为structured data，这样的数据更容易被计算机所理解，因为我们为每一个值都定义了属性名。后一种数据称为unstructured data，例如对于用户的评价，涉及自然语言的处理，涉及语义的处理，至少会包括这样的两个问题，一种是多义词(Polysemous Words),另一种是同义词(Synonyms)，所以这种数据处理起来要更复杂。</p>
+<p>item的每一个attribute我们称之为一个特征，那么对于每一个特征，我们需要一种方法去确定它们的重要性(importance)。在信息检索里，一个简单的而常用的一种度量标准叫做TF*IDF权重(Term Frequency times inverse document frequency)。 </p>
+<p><img src="/img/TFIDF.png" alt="">   (term i， document j， N total number of documents)</p>
+<p>TFIDF认为<strong>如果一个单词在某个文档中出现频率很高，而且在其他文档中出现频率很少，那么这个词与这个文档就越相关，越具有区分度</strong>。</p>
+<p>例如这个课里是<strong>将每一部电影表示成它所拥有的标签的一个TFIDF向量</strong>，向量中的每一个元素是tagID-&gt;tag的TFIDF值的一个键值对。</p>
+<h2 id="User_Profiles">User Profiles</h2><p>User Profiles是用来描述一个用户，像Criminal Minds里都会对罪犯进行侧写(profiles)，通过侧写可以更了解罪犯的行为特征，心理等等。而在推荐系统中，user profiles更侧重于应该如何描述用户的兴趣(interests),从而根据他的兴趣来进行推荐。</p>
+<p>一种最常见的方法就是<strong>根据用户之前的行为历史来对用户进行推荐</strong>(当然对于冷启动问题，我们在这不讨论)，用户的行为一般分两种：显性反馈行为（explicit feedback），隐性反馈行为(implicit feedback)。  </p>
+<p>显性反馈行为一般包括用户的评分，或者一些binary feedbacdk像喜欢\不喜欢、顶\踩等等，这些行为可以比较直接地知道用户的兴趣；隐性反馈行为一般包括用户的浏览行为，这样的行为不能明确地表达用户的兴趣。</p>
+<p>例如这个课里主要是针对用户的评分和用户对电影给的tag来进行user profiles的生成，总的思路是产生一个用户的tag vector，而这个vector是根据用户有过行为的item的tag vector来产生的。</p>
+<p>它给了两种的产生方法，第一种是根据用户对item评分多少（例如5分制中大于3.5分来对item来进行选择，大于3.5分的item的tag vector才进行求和；第二种是根据权重(用户对该item的评分减去用户的平均评分)来进行item的tag vector求和。</p>
+<p><img src="/img/WeightedUserProfile.png" alt="">   (用户u， item i)</p>
+<h2 id="How_To_Recommend">How To Recommend</h2><p>这个课介绍了种简单的方法用来产生推荐，就是通过计算user vector和每个item vector的余弦相似度(Cosine Similarity)，从而对user推荐高相似度的item。</p>
+<p><img src="/img/CosineSimilarity.png" alt=""></p>
+<p>根据以上的思路，对用户<code>4045 144</code>进行推荐，得到以下结果：</p>
+<blockquote>
+<p>recommendations for user 4045:<br>  807: 0.1932<br>  63: 0.1438<br>  187: 0.0948<br>  11: 0.0900<br>  641: 0.0471  </p>
+<p>recommendations for user 144:<br>  11: 0.1394<br>  585: 0.1229<br>  671: 0.1130<br>  672: 0.0878<br>  141: 0.04  </p>
+</blockquote>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/recommender-system/" rel="tag">#recommender system</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/03/27/user-based-collaborative-filtering-recommendation/" rel="prev">基于用户的协同过滤推荐</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div class="ds-thread" data-thread-key="2014/03/26/content-based-recommendations/"
+                   data-title="基于内容的推荐" data-url="http://yoursite.com/2014/03/26/content-based-recommendations/">
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="https://avatars0.githubusercontent.com/u/5821394?v=3&s=460" alt="zengguanming" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">zengguanming</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Item_Representations"><span class="nav-number">1.</span> <span class="nav-text">Item Representations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#User_Profiles"><span class="nav-number">2.</span> <span class="nav-text">User Profiles</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How_To_Recommend"><span class="nav-number">3.</span> <span class="nav-text">How To Recommend</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zengguanming</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"hialex"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+  	<script src="/js/ua-parser.min.js"></script>
+  	<script src="/js/hook-duoshuo.js"></script>
+  
+
+    
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
