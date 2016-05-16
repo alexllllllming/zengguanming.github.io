@@ -26,7 +26,7 @@
 
 
 
-  <meta name="keywords" content="javascript," />
+  <meta name="keywords" content="Automation," />
 
 
 
@@ -35,32 +35,20 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="什么是HTML-5 Full-Screen API不同于浏览器自身提供的网页全屏功能，Full-Screen API可以使网页中特定的元素全屏展示，或许是一张图片，或许是一段视频…重要的是，通过该api，我们能够很方便地实现全屏功能．遗憾的是，该ＡＰＩ支持新的浏览器，如果想在老的浏览器中也实现全屏，就没办法了．
-
-
-来自Can I Use的浏览器兼容性数据
-
-需要注意的是，由于该API还未进入标准">
+<meta name="description" content="博客长草了许久，发译文一篇。(翻译自Selenium官方博文)
+序言如果你已经对Selenium测试工具很熟悉，你可能只是在快速地找某个问题的解决方法，如果是以上这种情况，你可以不看此博文直接转到Selenium Wiki。本文的内容由浅入深，适合不同程度的读者。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HTML-5 Full-Screen API">
-<meta property="og:url" content="http://yoursite.com/2014/08/21/HTML-5 Full-Screen API/index.html">
+<meta property="og:title" content="认识Selenium-Grid(译)">
+<meta property="og:url" content="http://yoursite.com/2015/11/16/认识Selenium-Grib/index.html">
 <meta property="og:site_name" content="Begin">
-<meta property="og:description" content="什么是HTML-5 Full-Screen API不同于浏览器自身提供的网页全屏功能，Full-Screen API可以使网页中特定的元素全屏展示，或许是一张图片，或许是一段视频…重要的是，通过该api，我们能够很方便地实现全屏功能．遗憾的是，该ＡＰＩ支持新的浏览器，如果想在老的浏览器中也实现全屏，就没办法了．
-
-
-来自Can I Use的浏览器兼容性数据
-
-需要注意的是，由于该API还未进入标准">
-<meta property="og:image" content="http://yoursite.com/img/HTML-5 Full-Screen API/full-screen-api.png">
-<meta property="og:updated_time" content="2015-08-06T03:46:45.000Z">
+<meta property="og:description" content="博客长草了许久，发译文一篇。(翻译自Selenium官方博文)
+序言如果你已经对Selenium测试工具很熟悉，你可能只是在快速地找某个问题的解决方法，如果是以上这种情况，你可以不看此博文直接转到Selenium Wiki。本文的内容由浅入深，适合不同程度的读者。">
+<meta property="og:image" content="http://yoursite.com/img/认识Selenium-Grib/selenium_grid_illu.png">
+<meta property="og:updated_time" content="2015-11-17T08:58:08.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HTML-5 Full-Screen API">
-<meta name="twitter:description" content="什么是HTML-5 Full-Screen API不同于浏览器自身提供的网页全屏功能，Full-Screen API可以使网页中特定的元素全屏展示，或许是一张图片，或许是一段视频…重要的是，通过该api，我们能够很方便地实现全屏功能．遗憾的是，该ＡＰＩ支持新的浏览器，如果想在老的浏览器中也实现全屏，就没办法了．
-
-
-来自Can I Use的浏览器兼容性数据
-
-需要注意的是，由于该API还未进入标准">
+<meta name="twitter:title" content="认识Selenium-Grid(译)">
+<meta name="twitter:description" content="博客长草了许久，发译文一篇。(翻译自Selenium官方博文)
+序言如果你已经对Selenium测试工具很熟悉，你可能只是在快速地找某个问题的解决方法，如果是以上这种情况，你可以不看此博文直接转到Selenium Wiki。本文的内容由浅入深，适合不同程度的读者。">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -70,7 +58,7 @@
   };
 </script>
 
-  <title> HTML-5 Full-Screen API | Begin </title>
+  <title> 认识Selenium-Grid(译) | Begin </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -179,7 +167,7 @@
           
           
             
-              HTML-5 Full-Screen API
+              认识Selenium-Grid(译)
             
           
         </h1>
@@ -188,8 +176,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2014-08-21T19:26:54+08:00" content="2014-08-21">
-            2014-08-21
+          <time itemprop="dateCreated" datetime="2015-11-16T00:00:00+08:00" content="2015-11-16">
+            2015-11-16
           </time>
         </span>
 
@@ -199,8 +187,8 @@
           
             <span class="post-comments-count">
               &nbsp; | &nbsp;
-              <a href="/2014/08/21/HTML-5 Full-Screen API/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2014/08/21/HTML-5 Full-Screen API/" itemprop="commentsCount"></span>
+              <a href="/2015/11/16/认识Selenium-Grib/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/16/认识Selenium-Grib/" itemprop="commentsCount"></span>
               </a>
             </span>
           
@@ -214,74 +202,45 @@
       
 
       
-        <span itemprop="articleBody"><h1 id="什么是HTML-5_Full-Screen_API">什么是HTML-5 Full-Screen API</h1><p>不同于浏览器自身提供的网页全屏功能，Full-Screen API可以使网页中特定的元素全屏展示，或许是一张图片，或许是一段视频…重要的是，通过该api，我们能够很方便地实现全屏功能．遗憾的是，该ＡＰＩ支持新的浏览器，如果想在老的浏览器中也实现全屏，就没办法了．</p>
-<p><a class="fancybox" href="/img/HTML-5 Full-Screen API/full-screen-api.png" title="浏览器兼容性" rel="HTML-5 Full-Screen API"><img src="/img/HTML-5 Full-Screen API/full-screen-api.png" alt="浏览器兼容性"></a></p>
-<blockquote>
-<p>来自<a href="http://caniuse.com/#feat=fullscreen" target="_blank">Can I Use</a>的浏览器兼容性数据</p>
-</blockquote>
-<p>需要注意的是，由于该API还未进入标准化阶段，所以调用该API时还是需要加上厂商前缀(vendor prefix)．而且为了区别旧版的fullScreen API，大部分厂商(除了firefox)将fullScreen的大写S改成了小写s．</p>
-<h1 id="API的属性和方法">API的属性和方法</h1><p>根据<a href="http://fullscreen.spec.whatwg.org/" target="_blank">whatwg</a>的草案规定:<br>标准的属性有两个: document.fullscreenEnabled, document.fullscreenElement.<br>标准的方法有两个: element.requestFullscreen(), document.exitFullscreen().<br>标准的事件类型也有两个: fullscreenchange, fullscreenerror．<br>同时，还规定:backdrop伪元素和:fullscreen伪类．</p>
-<a id="more"></a>
-<blockquote>
-<p>requestFullscreen()是在指定元素上调用的，而exitFullscreen是需要在document上调用,具体的细节流程可以查看<a href="http://fullscreen.spec.whatwg.org/" target="_blank">whatwg</a>;</p>
-</blockquote>
-<h2 id="requestFullscreen()">requestFullscreen()</h2><p>void requestFullscreen();</p>
-<blockquote>
-<p>使特定的元素进行全屏模式</p>
-</blockquote>
-<p>在不同浏览器中调用时，需要加其前缀:</p>
+        <span itemprop="articleBody"><p>博客长草了许久，发译文一篇。(翻译自<a href="http://www.seleniumhq.org/docs/07_selenium_grid.jsp#chapter07-reference" target="_blank" rel="external">Selenium官方博文</a>)</p>
+<h2 id="序言">序言</h2><p>如果你已经对Selenium测试工具很熟悉，你可能只是在快速地找某个问题的解决方法，如果是以上这种情况，你可以不看此博文直接转到<a href="http://code.google.com/p/selenium/wiki/Grid2" target="_blank" rel="external">Selenium Wiki</a>。本文的内容由浅入深，适合不同程度的读者。<br><a id="more"></a></p>
+<h2 id="什么是Selenium-Grid">什么是Selenium-Grid</h2><p>Selenium-Grid可以在不同机器不同浏览器上并行的运行测试, 也就是在同一时间跑多个测试，这些测试是分布在不同机器的浏览器上的。因此，Selenium-Grid支持分布式测试，让你的测试可以运行在分布式的执行环境种。</p>
+<h2 id="什么时候需要用它">什么时候需要用它</h2><p>通常来说，使用Selenium-Grid出于两种原因。</p>
 <ul>
-<li>webkitRequestFullscreen</li>
-<li>mozRequestFullScreen </li>
-<li>msRequestFullscreen</li>
+<li>需要多浏览器的支持，而且这些浏览器需要跑在不同的系统上。</li>
+<li>需要减少测试所耗费的时间，提供测试的运行效率。</li>
 </ul>
-<p>在调用requestFullscreen()之前，需要检测浏览器是否支持fullscreen，可以通过检查document.fullscreenEnabled是否为true;</p>
-<p>同样地，在不同浏览器调用时，需要加其前缀:</p>
-<ul>
-<li>document.webkitFullscreenEnabled</li>
-<li>document.mozFullScreenEnabled</li>
-<li>document.msFullscreenEnabled</li>
-</ul>
-<p>在requestFullscreen()执行过程中，会大致经历以下几步：</p>
+<p>Selenium-Grid用于通过多机器的并行执行来加快测试的执行时间。举个栗子，如果你需要跑100个测试case，但是你配置Selenium-Grid支持四个不同的机器（虚拟机或真实机器）来跑这些测试，那么这些测试只需要四分之一的时间就能完成(相对于在一台机器上串行地跑)。对于大型的测试方案，像需要大量的数据验证的测试，使用Grid将会显著地减少大量时间消耗。还有一种情况就是开发人员需要跑测试来做代码检查，那么就非常有必要减少测试时间，例如采用敏捷开发的团队，需要很快地得到测试反馈。</p>
+<p>Selenium-Grid用于支持多种运行环境，特别是在同一时间内需要不同的浏览器。举个栗子，一个虚拟的Grid机器可以分别配置不同的浏览器器来支持所必需的浏览器版本。机器一有IE8、机器二有IE9、机器三有最新版的chrome…当测试集被提交运行时，Selenium-Grid会收到所需的测试浏览器组合，然后在分配这些测试在对应的浏览器种开跑。</p>
+<p>再着，可以在Grid部署相同版本的浏览器,举个栗子，一个Grid拥有4台机器，其中三台机器都有FireFox 12。所以跑测试集的时候，每个测试传到Selenium-Grid，它可以把这个测试分配至下一个可用的Firefox实例上。通过这种特性，明显减少了测试耗费的时间。</p>
+<p>Selenium-Grid很灵活，通过将以上两种场景结合在一起，可以实现多浏览器多版本多实例。这样的配置可以支持”并行执行”和多版本多浏览器测试。</p>
+<h2 id="Selenium-Grid_2">Selenium-Grid 2</h2><p>最新版本的Selenium-Grid 2已经把Selenium-RC-Server和Selenium-Grid全部放在一个package里了，就是你现在下载的Selenium已经自带了Selenium-Grid，赶紧体验下呗。</p>
+<h2 id="Selenium-Grid的hub和node是如何工作的">Selenium-Grid的hub和node是如何工作的</h2><p>一个grid包含了一个中心hub节和一个或多个非中心node，都是通过selenium-server.jar来运行。</p>
+<p>在hub接收的测试集包含的信息里，都携带了测试需要运行的浏览器(IE、Firefox)和系统平台（Windows、Linux）的信息。而<strong>hub知道各个注册到该hub的node节点的配置信息</strong>。通过这些信息，hub就可以找到可用的node节点（含所请求的浏览器-平台组合）。当一个node被选择了之后，这个测试产生的Selenium命令就会被hub转发至对应的node，这个node就会启动对应的浏览器来执行这些Selenium命令。</p>
+<p>下面的流程图可以解释以上的流程。这张图片是关于Selenium Grid 1的，就是上一个版本的Grid。但是他仍然可以用来解释最新版本的Grid，只需要将里面的名词”Selenium Remote Control”替换为”Selenium Grid node”即可。<br><a class="fancybox" href="/img/认识Selenium-Grib/selenium_grid_illu.png" title="Selenium Grid工作机制" rel="认识Selenium-Grib"><img src="/img/认识Selenium-Grib/selenium_grid_illu.png" alt="Selenium Grid工作机制"></a></p>
+<p>Selenium Hub是测试的唯一入口，它会根据当前node的负载，将Selenium的请求发送到可使用的node上。</p>
+<h2 id="安装Selenium">安装Selenium</h2><p>这里省略，可以到<a href="http://www.seleniumhq.org/" target="_blank" rel="external">官网</a>下载<code>.jar</code>包即可。</p>
+<h2 id="启动Selenium-Grid">启动Selenium-Grid</h2><p>通常需要先启动一个hub，因为node都是依赖于hub的，但是这也不是必须的，因为node可以检测hub有没有启动。</p>
+<h3 id="启动hub">启动hub</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">java</span> <span class="tag">-jar</span> <span class="tag">selenium-server-standalone-2</span><span class="class">.44</span><span class="class">.0</span><span class="class">.jar</span> <span class="tag">-role</span> <span class="tag">hub</span></span><br></pre></td></tr></table></figure>
+<p>启动<code>.jar</code>包版本改成你下载的版本号；上面使用默认的参数值来启动hub，关于参数的解释会在下一节进行介绍。</p>
+<h3 id="启动node">启动node</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">java</span> <span class="tag">-jar</span> <span class="tag">selenium-server-standalone-2</span><span class="class">.44</span><span class="class">.0</span><span class="class">.jar</span> <span class="tag">-role</span> <span class="tag">node</span>  <span class="tag">-hub</span> <span class="rule"><span class="attribute">http</span>:<span class="value">//localhost:<span class="number">4444</span>/grid/register</span></span></span><br></pre></td></tr></table></figure>
+<p>hub使用的是默认端口值（4444）,所以我们直接使用默认的端口号来定位hub。同时，我们是在一台机器上运行的hub，所以直接使用<code>localhost</code>。<strong>如果hub和node是在不同机器上</strong>，只需简单的讲<code>localhost</code>替换为机器的主机名即可。</p>
+<blockquote>
+<p>如果远程机器上有开启防火墙，需要关闭否则会连接失败。</p>
+</blockquote>
+<h2 id="Selenium-Grid配置">Selenium-Grid配置</h2><p>Selenium-Grid支持三种方式配置:</p>
 <ol>
-<li><p>检查该元素是否能够全屏,需满足以下全部条件<br> 1.1 元素是否在document中<br> 1.2 元素所在document的fullscreenEnabled标志是否设置正确<br> 1.3 元素所在document的fullscreenElement栈是否为空<br> 1.4 元素没有存在iframe祖先元素</p>
-</li>
-<li><p>如果有错误，则会触发fullscreenerror事件;否则將该元素放到fullscreenElement栈顶,接着触发fullscreenchange事件.</p>
-</li>
+<li>默认配置</li>
+<li>json配置文件</li>
+<li>命令行参数配置</li>
 </ol>
-<p>同样地，若需要为fullscreenerror和fullscreenchange事件添加侦听器，也需要加其前缀:</p>
-<p>fullscreenchange:</p>
-<ul>
-<li>webkitfullscreenchange</li>
-<li>mozfullscreenchange</li>
-<li>MSFullscreenchange</li>
-</ul>
-<p>fullscreenerror:</p>
-<ul>
-<li>webkitfullscreenerror</li>
-<li>mozfullscreenerror</li>
-<li>MSFullscreenerror</li>
-</ul>
-<h2 id="exitFullscreen()">exitFullscreen()</h2><p>取消全屏时，需要在document元素上调用exitFullscreen(), 该方法在不同浏览器中命名有些许差别：</p>
-<ul>
-<li>document.webkitExitFullscreen()</li>
-<li>document.mozCancelFullScreen()</li>
-<li>document.msExitFullscreen()</li>
-</ul>
-<p>执行完exitFullscreen()后会触发fullscreenchange事件．</p>
-<h2 id=":backdrop_和_:fullscreen">:backdrop 和 :fullscreen</h2><p>:backdrop伪元素是在fullscreenElement之下的元素，可以用它来设定背景的颜色，但是到目前为止，只有在ie11上才可以设定:backdrop，其他浏览器暂时不允许改变:backdrop的样式．</p>
-<p>比较常用的是通过:fullscreen伪类来改变元素在全屏下的样式，在不同的浏览器下也要加上对应的前缀：</p>
-<ul>
-<li>:-moz-full-screen</li>
-<li>:-webkit-full-screen</li>
-<li>:-ms-fullscreen</li>
-</ul>
-<p>注意,对于每个前缀对应的样式要分为独立的规则写，否则会造成无法正确地应用,如：</p>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">:-moz-full-screen</span>,</span><br><span class="line"><span class="symbol">:-webkit-full-screen</span>,</span><br><span class="line"><span class="symbol">:-ms-fullscrren</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上面的写法是错误的，假如是webkit的浏览读到这个规则，那么当它读到第一条子规则时无法识别，因此会把后面的子规则也抛弃掉，正确的写法是分开写．</p>
-<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">:-moz-full-screen</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="symbol">:-webkit-full-screen</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="symbol">:-ms-fullscrren</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="Demo">Demo</h1><p>我在写一个插件时，也加入了fullscrren api,有兴趣的可以看一下<a href="http://zengguanming.github.io/ppSlider/" target="_blank">demo</a>．</p>
-<h1 id="参考资料">参考资料</h1><p>[1] <a href="http://fullscreen.spec.whatwg.org/" target="_blank">whatwg fullscrren specification</a><br>[2] <a href="http://www.sitepoint.com/use-html5-full-screen-api/" target="_blank">use-html5-full-screen-api/</a><br>[3] <a href="http://hacks.mozilla.org/2012/01/using-the-fullscreen-api-in-web-browsers/" target="_blank">using-the-fullscreen-api-in-web-browsers/</a></p>
+<p>官方文档这方面介绍比较少，关于json配置文件可以参考该配置信息<a href="https://github.com/davidlinse/nightwatch/commit/2a543c197" target="_blank" rel="external">a sample selenium hub/node setup</a>。</p>
+<h2 id="自定义Grid">自定义Grid</h2><h3 id="hun/node加入自定义容器(servlets)">hun/node加入自定义容器(servlets)</h3><p>Grid允许你在hub/node上嵌入自定义的servlets，因此可以在hub/node上实现定制化。<br>举个栗子，为了调试的目的，我们希望能够获取所有node产生的log。传统的解决方式是我们需要登入每台node的机器上，另外一种更好的实现方式是我们可以在hub/node上插入自定义的逻辑。<br>首先我们着手写servlet。所有的servlets都可以通过继承来产生。</p>
+<ol>
+<li><code>org.openqa.grid.web.servlet.RegistryBasedServlet</code>(or)</li>
+<li><code>javax.servlet.http.HttpServlet</code></li>
+</ol>
+<p>如果你需要获取hub的内部变量那么你就继承1；如果不需要就继承2。</p>
 </span>
       
     </div>
@@ -290,7 +249,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/javascript/" rel="tag">#javascript</a>
+            <a href="/tags/Automation/" rel="tag">#Automation</a>
           
         </div>
       
@@ -299,13 +258,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2014/08/29/常用的正则表达式及分析/" rel="prev">常用的正则表达式及分析</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2014/05/22/(译)NumPy教程(一)/" rel="next">(译)NumPy教程(一)</a>
+              <a href="/2014/09/07/HTML5语义化标签/" rel="next">HTML5语义化标签</a>
             
           </div>
         </div>
@@ -330,8 +287,8 @@
         
           <div class="comments" id="comments">
             
-              <div class="ds-thread" data-thread-key="2014/08/21/HTML-5 Full-Screen API/"
-                   data-title="HTML-5 Full-Screen API" data-url="http://yoursite.com/2014/08/21/HTML-5 Full-Screen API/">
+              <div class="ds-thread" data-thread-key="2015/11/16/认识Selenium-Grib/"
+                   data-title="认识Selenium-Grid(译)" data-url="http://yoursite.com/2015/11/16/认识Selenium-Grib/">
               </div>
             
           </div>
@@ -423,7 +380,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是HTML-5_Full-Screen_API"><span class="nav-number">1.</span> <span class="nav-text">什么是HTML-5 Full-Screen API</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#API的属性和方法"><span class="nav-number">2.</span> <span class="nav-text">API的属性和方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#requestFullscreen()"><span class="nav-number">2.1.</span> <span class="nav-text">requestFullscreen()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#exitFullscreen()"><span class="nav-number">2.2.</span> <span class="nav-text">exitFullscreen()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#:backdrop_和_:fullscreen"><span class="nav-number">2.3.</span> <span class="nav-text">:backdrop 和 :fullscreen</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Demo"><span class="nav-number">3.</span> <span class="nav-text">Demo</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#序言"><span class="nav-number">1.</span> <span class="nav-text">序言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是Selenium-Grid"><span class="nav-number">2.</span> <span class="nav-text">什么是Selenium-Grid</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么时候需要用它"><span class="nav-number">3.</span> <span class="nav-text">什么时候需要用它</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Selenium-Grid_2"><span class="nav-number">4.</span> <span class="nav-text">Selenium-Grid 2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Selenium-Grid的hub和node是如何工作的"><span class="nav-number">5.</span> <span class="nav-text">Selenium-Grid的hub和node是如何工作的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装Selenium"><span class="nav-number">6.</span> <span class="nav-text">安装Selenium</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动Selenium-Grid"><span class="nav-number">7.</span> <span class="nav-text">启动Selenium-Grid</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#启动hub"><span class="nav-number">7.1.</span> <span class="nav-text">启动hub</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动node"><span class="nav-number">7.2.</span> <span class="nav-text">启动node</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Selenium-Grid配置"><span class="nav-number">8.</span> <span class="nav-text">Selenium-Grid配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义Grid"><span class="nav-number">9.</span> <span class="nav-text">自定义Grid</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#hun/node加入自定义容器(servlets)"><span class="nav-number">9.1.</span> <span class="nav-text">hun/node加入自定义容器(servlets)</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
